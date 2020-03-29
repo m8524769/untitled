@@ -4,20 +4,6 @@
     "types": [],
     "structs": [
         {
-            "name": "bye",
-            "base": "",
-            "fields": [
-                {
-                    "name": "from",
-                    "type": "name"
-                },
-                {
-                    "name": "message",
-                    "type": "string"
-                }
-            ]
-        },
-        {
             "name": "clear",
             "base": "",
             "fields": []
@@ -37,6 +23,20 @@
             ]
         },
         {
+            "name": "inituser",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "info",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "messages",
             "base": "",
             "fields": [
@@ -49,14 +49,23 @@
                     "type": "string"
                 }
             ]
+        },
+        {
+            "name": "users",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "info",
+                    "type": "string"
+                }
+            ]
         }
     ],
     "actions": [
-        {
-            "name": "bye",
-            "type": "bye",
-            "ricardian_contract": ""
-        },
         {
             "name": "clear",
             "type": "clear",
@@ -66,12 +75,24 @@
             "name": "hi",
             "type": "hi",
             "ricardian_contract": ""
+        },
+        {
+            "name": "inituser",
+            "type": "inituser",
+            "ricardian_contract": ""
         }
     ],
     "tables": [
         {
             "name": "messages",
             "type": "messages",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "users",
+            "type": "users",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

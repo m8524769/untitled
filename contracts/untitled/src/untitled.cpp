@@ -22,24 +22,6 @@ ACTION untitled::hi(name from, string message) {
   }
 }
 
-ACTION untitled::bye(name from, string message) {
-  require_auth(from);
-
-  messages_table _messages(get_self(), get_self().value);
-
-  auto msg_itr = _messages.find(from.value);
-  if (msg_itr == _messages.end()) {
-    _messages.emplace(from, [&](auto& msg) {
-      msg.user = from;
-      msg.text = message;
-    });
-  } else {
-    _messages.modify(msg_itr, from, [&](auto& msg) {
-      msg.text = message;
-    });
-  }
-}
-
 ACTION untitled::clear() {
   require_auth(get_self());
 
@@ -52,4 +34,22 @@ ACTION untitled::clear() {
   }
 }
 
-EOSIO_DISPATCH(untitled, (hi)(bye)(clear))
+ACTION untitled::inituser(name user, string info) {
+  require_auth( user );
+
+  users_table users(get_self(), get_self().value);
+
+  auto user_itr = users.find(user.value);
+  if (user_itr == users.end()) {
+    users.emplace(user, [&](auto& row) {
+      row.user = user;
+      row.info = info;
+    });
+  } else {
+    users.modify(user_itr, user, [&](auto& row) {
+      row.info = info;
+    });
+  }
+}
+
+EOSIO_DISPATCH(untitled, (hi)(clear)(inituser))
