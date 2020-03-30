@@ -4,18 +4,30 @@
 using namespace std;
 using namespace eosio;
 
-CONTRACT untitled : public contract {
+class [[eosio::contract("untitled")]] untitled : public contract {
   public:
     using contract::contract;
 
-    ACTION hi(name from, string message);
-    ACTION clear();
-    ACTION clearuser();
-    ACTION inituser(name user, string info);
+    [[eosio::action]]
+    void hi(name from, string message);
 
-    ACTION createfile(uint64_t id, string filename, string description, asset price);
-    ACTION buyfile(name buyer, uint64_t id);
-    ACTION clearfile();
+    [[eosio::action]]
+    void clear();
+
+    [[eosio::action]]
+    void clearuser();
+
+    [[eosio::action]]
+    void inituser(name user, string info);
+
+    [[eosio::action]]
+    void createfile(uint64_t id, string filename, string description, asset price);
+
+    [[eosio::action]]
+    void buyfile(name buyer, uint64_t id);
+
+    [[eosio::action]]
+    void clearfile();
 
     // 监听 eosio.token 的 transfer 操作
     // [[eosio::on_notify("eosio.token::transfer")]]

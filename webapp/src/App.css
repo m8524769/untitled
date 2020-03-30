@@ -1,0 +1,46 @@
+.full-width {
+  width: 100%;
+}
+
+.anchor {
+  color: #1890ff;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  touch-action: manipulation;
+  user-select: none;
+  &:hover {
+    color: #40a9ff;
+  }
+  &:active {
+    color: #096dd9;
+  }
+  &:active,
+  &:hover {
+    text-decoration: none;
+    outline: 0;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar {
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px 16px;
+  width: 100%;
+  min-height: 64px;
+  overflow: scroll;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  background-color: #fff;
+  & > .toolbar-item {
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+}
