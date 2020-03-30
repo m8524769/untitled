@@ -4,9 +4,89 @@
     "types": [],
     "structs": [
         {
+            "name": "buyfile",
+            "base": "",
+            "fields": [
+                {
+                    "name": "buyer",
+                    "type": "name"
+                },
+                {
+                    "name": "id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "clear",
             "base": "",
             "fields": []
+        },
+        {
+            "name": "clearfile",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "clearuser",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "createfile",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "filename",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "file",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "hash",
+                    "type": "checksum256"
+                },
+                {
+                    "name": "filename",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "size",
+                    "type": "uint64"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
         },
         {
             "name": "hi",
@@ -37,7 +117,7 @@
             ]
         },
         {
-            "name": "messages",
+            "name": "message",
             "base": "",
             "fields": [
                 {
@@ -51,7 +131,7 @@
             ]
         },
         {
-            "name": "users",
+            "name": "user",
             "base": "",
             "fields": [
                 {
@@ -61,14 +141,38 @@
                 {
                     "name": "info",
                     "type": "string"
+                },
+                {
+                    "name": "balance",
+                    "type": "asset"
                 }
             ]
         }
     ],
     "actions": [
         {
+            "name": "buyfile",
+            "type": "buyfile",
+            "ricardian_contract": ""
+        },
+        {
             "name": "clear",
             "type": "clear",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "clearfile",
+            "type": "clearfile",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "clearuser",
+            "type": "clearuser",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "createfile",
+            "type": "createfile",
             "ricardian_contract": ""
         },
         {
@@ -84,15 +188,22 @@
     ],
     "tables": [
         {
+            "name": "files",
+            "type": "file",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "messages",
-            "type": "messages",
+            "type": "message",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
         },
         {
             "name": "users",
-            "type": "users",
+            "type": "user",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
