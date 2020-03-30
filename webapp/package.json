@@ -16,11 +16,12 @@
     "debug:webpack": "node --inspect-brk node_modules/webpack/bin/webpack.js"
   },
   "dependencies": {
+    "@ant-design/compatible": "^1.0.2",
+    "@ant-design/icons": "^4.0.5",
     "@loadable/component": "^5.10.3",
     "antd": "^4.1.0",
     "axios": "^0.19.0",
-    "google-protobuf": "^3.10.0-rc.1",
-    "grpc-web": "^1.0.6",
+    "ipfs": "^0.41.2",
     "lodash": "^4.17.15",
     "mobx": "^5.13.0",
     "mobx-react": "^6.1.3",

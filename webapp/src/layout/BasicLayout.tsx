@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Layout, Menu } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import LoginModal from 'router/Auth/component/LoginModal';
 
@@ -15,11 +16,6 @@ class BasicLayout extends React.Component<any, any> {
         path: '/app/admin',
         label: '后台管理',
         icon: 'tool',
-      },
-      {
-        path: '/app/user',
-        label: '用户管理',
-        icon: 'contacts',
       },
     ],
   };
@@ -38,7 +34,7 @@ class BasicLayout extends React.Component<any, any> {
             {this.state.navLinks.map((navLink) => (
               <Menu.Item key={navLink.path}>
                 <NavLink to={navLink.path}>
-                  <Icon type={navLink.icon} theme="filled" />
+                  <LegacyIcon type={navLink.icon} theme="filled" />
                   {navLink.label}
                 </NavLink>
               </Menu.Item>

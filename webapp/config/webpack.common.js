@@ -91,21 +91,21 @@ module.exports = {
       title: 'AppHub',
       favicon: path.join(__dirname, '../src/assets', 'favicon.ico'),
     }),
-    ...(fs.existsSync('vendor')
-      ? fs.readdirSync('vendor')
-        .filter(filename => filename.endsWith('.manifest.json'))
-        .map(manifest =>
-          new webpack.DllReferencePlugin({
-            manifest: path.join(__dirname, '../vendor', manifest),
-          })
-        )
-      : []
-    ),
-    new AddAssetHtmlPlugin({
-      filepath: path.resolve(__dirname, '../vendor/*.dll.js'),
-      publicPath: '/vendor',
-      outputPath: 'vendor',
-    }),
+    // ...(fs.existsSync('vendor')
+    //   ? fs.readdirSync('vendor')
+    //     .filter(filename => filename.endsWith('.manifest.json'))
+    //     .map(manifest =>
+    //       new webpack.DllReferencePlugin({
+    //         manifest: path.join(__dirname, '../vendor', manifest),
+    //       })
+    //     )
+    //   : []
+    // ),
+    // new AddAssetHtmlPlugin({
+    //   filepath: path.resolve(__dirname, '../vendor/*.dll.js'),
+    //   publicPath: '/vendor',
+    //   outputPath: 'vendor',
+    // }),
     new webpack.ContextReplacementPlugin(
       /moment[/\\]locale$/, /zh-cn/
     ),

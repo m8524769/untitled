@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Form, Modal, Button, Input, message } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Button, Input, message } from 'antd';
 import wrapperForm from 'enhancer/wrapperForm';
 import Api from 'api';
 import authStore from '../AuthStore';

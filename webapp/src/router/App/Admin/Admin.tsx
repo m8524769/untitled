@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { APP_CATEGORIES } from 'constants/app';
+import { SyncOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
 import {
-  Form,
   Cascader,
   Table,
   message,
@@ -207,7 +209,7 @@ class Admin extends React.Component<any, any> {
           extra={
             <Fragment>
               <Button
-                icon="sync"
+                icon={<SyncOutlined />}
                 loading={status.loading}
                 onClick={() => this.getApps({ page: 1, pageSize: 7 })}
               >

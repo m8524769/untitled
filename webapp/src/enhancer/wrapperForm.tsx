@@ -1,5 +1,9 @@
-import { Form } from 'antd';
-import { FormComponentProps, FormCreateOption } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import {
+  FormComponentProps,
+  FormCreateOption,
+} from '@ant-design/compatible/lib/form';
 
 export default function wrapperForm<TOwnProps extends FormComponentProps<any>>(
   options?: FormCreateOption<TOwnProps>,

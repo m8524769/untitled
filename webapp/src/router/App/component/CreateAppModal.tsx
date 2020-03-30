@@ -1,18 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import {
-  Form,
-  Modal,
-  Button,
-  Input,
-  Cascader,
-  message,
-  Upload,
-  Icon,
-  Select,
-} from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Button, Input, Cascader, message, Upload, Select } from 'antd';
 import wrapperForm from 'enhancer/wrapperForm';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import Api from 'api';
 import { APP_CATEGORIES, LANGUAGES, ANDROID_ROMS } from 'constants/app';
 import appStore from '../AppStore';
@@ -192,7 +185,7 @@ export default class CreateAppModal extends React.Component<
                 }}
               >
                 <Button>
-                  <Icon type="upload" />
+                  <UploadOutlined />
                   上传 APK 文件
                 </Button>
               </Upload>,

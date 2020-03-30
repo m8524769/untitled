@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { APP_CATEGORIES, APP_STATUS } from 'constants/app';
+import { PlusOutlined, SyncOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
 import {
-  Form,
   Cascader,
   Table,
   message,
@@ -9,7 +11,6 @@ import {
   Input,
   PageHeader,
   Select,
-  Icon,
   Divider,
   Modal,
   Tag,
@@ -368,7 +369,7 @@ class Developer extends React.Component<any, any> {
           extra={
             <Fragment>
               <Button
-                icon="sync"
+                icon={<SyncOutlined />}
                 loading={status.loading}
                 onClick={() => this.getApps({ page: 1, pageSize: 7 })}
               >
@@ -378,7 +379,7 @@ class Developer extends React.Component<any, any> {
                 type="primary"
                 onClick={() => appStore.showCreateAppModal()}
               >
-                <Icon type="plus" />
+                <PlusOutlined />
                 创建 / 发布新的 APP
               </Button>
 

@@ -5,7 +5,7 @@ import { Result, Button } from 'antd';
 import Admin from './App/Admin/Admin';
 import Developer from './App/Developer/Developer';
 import authStore from './Auth/AuthStore';
-import UserManagement from './User/UserManagement/UserManagement';
+import Home from './Home/Home';
 
 const PrivateRoute = ({ component: Component, ...rest }: RouteProps) => (
   <Route
@@ -23,14 +23,11 @@ const PrivateRoute = ({ component: Component, ...rest }: RouteProps) => (
 const router = (
   <Switch>
     {/* 首页 */}
-    <Route exact path="/">
-      <Redirect to="/app/developer" />
-    </Route>
+    <Route exact path="/" component={Home} />
 
     <Route path="/app">
       <PrivateRoute exact path="/app/developer" component={Developer} />
       <PrivateRoute exact path="/app/admin" component={Admin} />
-      <PrivateRoute exact path="/app/user" component={UserManagement} />
       <Route exact path="/app">
         <Redirect to="/app/developer" />
       </Route>

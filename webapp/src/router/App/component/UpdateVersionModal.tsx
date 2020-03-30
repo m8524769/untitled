@@ -1,8 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Form, Modal, Button, Input, message } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Button, Input, message } from 'antd';
 import wrapperForm from 'enhancer/wrapperForm';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import Api from 'api';
 import appStore from '../AppStore';
 import { UpdateVersionRequestBody } from 'api/app.api';
