@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { AndroidFilled, ToolFilled } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import LoginModal from 'router/Auth/component/LoginModal';
@@ -10,12 +10,12 @@ class BasicLayout extends React.Component<any, any> {
       {
         path: '/app/developer',
         label: '开发者平台',
-        icon: 'android',
+        icon: <AndroidFilled />,
       },
       {
         path: '/app/admin',
         label: '后台管理',
-        icon: 'tool',
+        icon: <ToolFilled />,
       },
     ],
   };
@@ -34,7 +34,7 @@ class BasicLayout extends React.Component<any, any> {
             {this.state.navLinks.map((navLink) => (
               <Menu.Item key={navLink.path}>
                 <NavLink to={navLink.path}>
-                  <LegacyIcon type={navLink.icon} theme="filled" />
+                  {navLink.icon}
                   {navLink.label}
                 </NavLink>
               </Menu.Item>

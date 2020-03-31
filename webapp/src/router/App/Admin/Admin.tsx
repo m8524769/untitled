@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { APP_CATEGORIES } from 'constants/app';
 import { SyncOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import {
   Cascader,
   Table,
@@ -13,6 +11,7 @@ import {
   Divider,
   Modal,
   Avatar,
+  Form,
 } from 'antd';
 import Api from 'api';
 import { inject, observer } from 'mobx-react';

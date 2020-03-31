@@ -1,53 +1,33 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { UploadOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Modal, Button, Input, message, Upload } from 'antd';
-import wrapperForm from 'enhancer/wrapperForm';
-import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
+import { Modal, Button, Input, message, Upload, Form } from 'antd';
 import Api from 'api';
 import appStore from '../AppStore';
 import { UpdateAppRequestBody } from 'api/app.api';
 
-interface UpdateAppModalProps {
-  form?: WrappedFormUtils;
-}
-
-@wrapperForm()
 @observer
-export default class UpdateAppModal extends React.Component<
-  UpdateAppModalProps,
-  any
-> {
+export default class UpdateAppModal extends React.Component<any, any> {
   state = {
     // submittable: true,
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((error, values) => {
-      if (!error) {
-        Modal.confirm({
-          title: '确定发布？',
-          cancelText: '再等等',
-          centered: true,
-          onOk() {
-            Api.app
-              .updateApp(
-                appStore.status.record.id,
-                values as UpdateAppRequestBody,
-              )
-              .then((response) => {
-                message.success('新版本发布成功！');
-                appStore.hideCreateAppModal();
-              })
-              .catch((error) => {
-                message.error(`发布失败，原因：${error}`);
-              });
-          },
-        });
-      }
+  handleFinish = (values) => {
+    Modal.confirm({
+      title: '确定发布？',
+      cancelText: '再等等',
+      centered: true,
+      onOk() {
+        Api.app
+          .updateApp(appStore.status.record.id, values as UpdateAppRequestBody)
+          .then((response) => {
+            message.success('新版本发布成功！');
+            appStore.hideCreateAppModal();
+          })
+          .catch((error) => {
+            message.error(`发布失败，原因：${error}`);
+          });
+      },
     });
   };
 
@@ -67,7 +47,7 @@ export default class UpdateAppModal extends React.Component<
 
   render() {
     const { status } = appStore;
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    const { setFieldsValue } = this.props.form;
 
     const formItemLayout = {
       labelCol: {
@@ -86,62 +66,62 @@ export default class UpdateAppModal extends React.Component<
         title={`发布新版 ${status.record.softwareName}`}
         mask={false}
         onCancel={this.handleCancel}
-        onOk={this.handleSubmit}
+        onOk={this.handleFinish}
         okButtonProps={{ disabled: false }}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
             取消
           </Button>,
-          <Button key="submit" type="primary" onClick={this.handleSubmit}>
+          <Button key="submit" type="primary" onClick={this.handleFinish}>
             发布
           </Button>,
         ]}
       >
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          <Form.Item label="版本号">
-            {getFieldDecorator('versionNo', {
-              rules: [{ required: true, message: '请填写版本号！' }],
-            })(<Input />)}
+        <Form {...formItemLayout} onFinish={this.handleFinish}>
+          <Form.Item
+            label="版本号"
+            name="versionNo"
+            rules={[{ required: true, message: '请填写版本号！' }]}
+          >
+            <Input />
           </Form.Item>
 
-          <Form.Item label="APK 文件">
-            {getFieldDecorator('apkFile', {
-              valuePropName: 'fileList',
-              getValueFromEvent: this.normFile,
-              rules: [{ required: true, message: '请上传 APK 文件！' }],
-            })(
-              <Upload
-                name="apkFile"
-                accept=".apk"
-                action="/api/app/upload"
-                method="POST"
-                onChange={(info) => {
-                  if (info.file.response) {
-                    const response = info.file.response;
-                    console.log(response);
-                    setFieldsValue({
-                      versionNo: `${response.versionName} (${response.versionCode})`,
-                    });
-                  }
-                  if (info.fileList.length === 0) {
-                    setFieldsValue({
-                      versionNo: '',
-                    });
-                  }
-                }}
-              >
-                <Button>
-                  <UploadOutlined />
-                  上传 APK 文件
-                </Button>
-              </Upload>,
-            )}
+          <Form.Item
+            label="APK 文件"
+            name="apkFile"
+            valuePropName="fileList"
+            getValueFromEvent={this.normFile}
+            rules={[{ required: true, message: '请上传 APK 文件！' }]}
+          >
+            <Upload
+              name="apkFile"
+              accept=".apk"
+              action="/api/app/upload"
+              method="POST"
+              onChange={(info) => {
+                if (info.file.response) {
+                  const response = info.file.response;
+                  console.log(response);
+                  setFieldsValue({
+                    versionNo: `${response.versionName} (${response.versionCode})`,
+                  });
+                }
+                if (info.fileList.length === 0) {
+                  setFieldsValue({
+                    versionNo: '',
+                  });
+                }
+              }}
+            >
+              <Button>
+                <UploadOutlined />
+                上传 APK 文件
+              </Button>
+            </Upload>
           </Form.Item>
 
-          <Form.Item label="更新说明">
-            {getFieldDecorator('versionInfo')(
-              <Input.TextArea placeholder="要求：不少于 800 字" />,
-            )}
+          <Form.Item label="更新说明" name="versionInfo">
+            <Input.TextArea placeholder="要求：不少于 800 字" />
           </Form.Item>
         </Form>
       </Modal>

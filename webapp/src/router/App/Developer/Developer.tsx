@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { APP_CATEGORIES, APP_STATUS } from 'constants/app';
 import { PlusOutlined, SyncOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import {
   Cascader,
   Table,
@@ -15,6 +13,7 @@ import {
   Modal,
   Tag,
   Avatar,
+  Form,
 } from 'antd';
 import moment from 'moment';
 import Api from 'api';

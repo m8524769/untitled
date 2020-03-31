@@ -1,52 +1,35 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Modal, Button, Input, message } from 'antd';
-import wrapperForm from 'enhancer/wrapperForm';
-import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
+import { Modal, Button, Input, message, Form } from 'antd';
 import Api from 'api';
 import appStore from '../AppStore';
 import { UpdateVersionRequestBody } from 'api/app.api';
 
-interface UpdateVersionModalProps {
-  form?: WrappedFormUtils;
-}
-
-@wrapperForm()
 @observer
-export default class UpdateVersionModal extends React.Component<
-  UpdateVersionModalProps,
-  any
-> {
+export default class UpdateVersionModal extends React.Component<any, any> {
   state = {
     // submittable: true,
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((error, values) => {
-      if (!error) {
-        Modal.confirm({
-          title: '确定修改？',
-          cancelText: '不确定',
-          centered: true,
-          onOk() {
-            Api.app
-              .updateVersion(
-                appStore.status.versionRecord.id,
-                values as UpdateVersionRequestBody,
-              )
-              .then(() => {
-                message.success('版本信息修改成功！');
-                appStore.hideUpdateVersionModal();
-              })
-              .catch((error) => {
-                message.error(`发布失败，原因：${error}`);
-              });
-          },
-        });
-      }
+  handleFinish = (values) => {
+    Modal.confirm({
+      title: '确定修改？',
+      cancelText: '不确定',
+      centered: true,
+      onOk() {
+        Api.app
+          .updateVersion(
+            appStore.status.versionRecord.id,
+            values as UpdateVersionRequestBody,
+          )
+          .then(() => {
+            message.success('版本信息修改成功！');
+            appStore.hideUpdateVersionModal();
+          })
+          .catch((error) => {
+            message.error(`发布失败，原因：${error}`);
+          });
+      },
     });
   };
 
@@ -56,7 +39,6 @@ export default class UpdateVersionModal extends React.Component<
 
   render() {
     const { status } = appStore;
-    const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
       labelCol: {
@@ -75,7 +57,7 @@ export default class UpdateVersionModal extends React.Component<
         title={`修改 ${status.versionRecord.versionNo} 版本信息`}
         mask={false}
         onCancel={this.handleCancel}
-        onOk={this.handleSubmit}
+        onOk={this.handleFinish}
         afterClose={() => {
           this.props.form.resetFields();
         }}
@@ -84,16 +66,20 @@ export default class UpdateVersionModal extends React.Component<
           <Button key="back" onClick={this.handleCancel}>
             取消
           </Button>,
-          <Button key="submit" type="primary" onClick={this.handleSubmit}>
+          <Button key="submit" type="primary" onClick={this.handleFinish}>
             保存
           </Button>,
         ]}
       >
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          <Form.Item label="版本说明">
-            {getFieldDecorator('versionInfo', {
-              initialValue: appStore.status.versionRecord.versionInfo,
-            })(<Input.TextArea placeholder="要求：不少于 800 字" />)}
+        <Form
+          {...formItemLayout}
+          onFinish={this.handleFinish}
+          initialValues={{
+            versionInfo: appStore.status.versionRecord.versionInfo,
+          }}
+        >
+          <Form.Item label="版本说明" name="versionInfo">
+            <Input.TextArea placeholder="要求：不少于 800 字" />
           </Form.Item>
         </Form>
       </Modal>

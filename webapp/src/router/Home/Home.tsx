@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import '@ant-design/compatible/assets/index.css';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import IpfsUpload from './component/IpfsUpload';
