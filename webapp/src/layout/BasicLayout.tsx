@@ -1,5 +1,4 @@
 import React from 'react';
-import { AndroidFilled, ToolFilled } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import LoginModal from 'router/Auth/component/LoginModal';
@@ -8,14 +7,12 @@ class BasicLayout extends React.Component<any, any> {
   state = {
     navLinks: [
       {
-        path: '/app/developer',
-        label: '开发者平台',
-        icon: <AndroidFilled />,
+        path: '/',
+        label: 'Home',
       },
       {
-        path: '/app/admin',
-        label: '后台管理',
-        icon: <ToolFilled />,
+        path: '/dashboard',
+        label: 'Dashboard',
       },
     ],
   };
@@ -33,10 +30,7 @@ class BasicLayout extends React.Component<any, any> {
           >
             {this.state.navLinks.map((navLink) => (
               <Menu.Item key={navLink.path}>
-                <NavLink to={navLink.path}>
-                  {navLink.icon}
-                  {navLink.label}
-                </NavLink>
+                <NavLink to={navLink.path}>{navLink.label}</NavLink>
               </Menu.Item>
             ))}
           </Menu>

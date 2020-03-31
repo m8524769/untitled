@@ -6,6 +6,7 @@ import Admin from './App/Admin/Admin';
 import Developer from './App/Developer/Developer';
 import authStore from './Auth/AuthStore';
 import Home from './Home/Home';
+import Dashboard from './Dashboard/Dashboard';
 
 const PrivateRoute = ({ component: Component, ...rest }: RouteProps) => (
   <Route
@@ -24,6 +25,8 @@ const router = (
   <Switch>
     {/* 首页 */}
     <Route exact path="/" component={Home} />
+
+    <Route exact path="/dashboard" component={Dashboard} />
 
     <Route path="/app">
       <PrivateRoute exact path="/app/developer" component={Developer} />

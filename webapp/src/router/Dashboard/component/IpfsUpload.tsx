@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Typography } from 'antd';
 import Dragger from 'antd/lib/upload/Dragger';
-import { InboxOutlined } from '@ant-design/icons';
+import { InboxOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import IPFS from 'ipfs';
 
 const IpfsUpload: React.FC = () => {
@@ -68,13 +68,21 @@ const IpfsUpload: React.FC = () => {
           showDownloadIcon: true,
         }}
       >
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
         {cid === '' ? (
-          <p className="ant-upload-text">Upload File to IPFS</p>
+          <div>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Upload File to IPFS</p>
+            <p className="ant-upload-hint">
+              This operation will NOT publish your file
+            </p>
+          </div>
         ) : (
           <div>
+            <p className="ant-upload-drag-icon">
+              <CheckCircleOutlined />
+            </p>
             <p className="ant-upload-text">Upload Successfully!</p>
             <p className="ant-upload-hint">You can copy the file's CID below</p>
           </div>

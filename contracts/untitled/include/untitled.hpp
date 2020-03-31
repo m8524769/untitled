@@ -21,7 +21,7 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void inituser(name user, string info);
 
     [[eosio::action]]
-    void createfile(uint64_t id, string filename, string description, asset price);
+    void createfile(string cid, string description, asset price);
 
     [[eosio::action]]
     void buyfile(name buyer, uint64_t id);
@@ -48,14 +48,12 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     };
 
     struct [[eosio::table]] file {
-      uint64_t    id;
-      name        owner;
-      checksum256 hash;
-      string      filename;
-      string      description;
-      uint64_t    size;
-      asset       price;
-      auto primary_key() const { return id; }
+      name      owner;
+      string    cid;
+      string    description;
+      uint64_t  size;
+      asset     price;
+      auto primary_key() const { return cid.code().raw(); }
     };
 
     typedef multi_index<name("messages"), message> messages_table;

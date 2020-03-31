@@ -63,14 +63,13 @@ ACTION untitled::clearuser() {
 }
 
 [[eosio::action]]
-void untitled::createfile(uint64_t id, string filename, string description, asset price) {
+void untitled::createfile(string cid, string description, asset price) {
   require_auth( get_self() );
 
   files_table files(get_self(), get_self().value);
   files.emplace(get_self(), [&](auto& row) {
-    row.id = id;
     row.owner = get_self();
-    row.filename = filename;
+    row.cid = cid;
     row.description = description;
     row.price = price;
   });
