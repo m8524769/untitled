@@ -18,8 +18,8 @@ const PublishFile: React.FC = () => {
     Modal.confirm({
       title: 'Are you sure to publish it?',
       icon: <ExclamationCircleOutlined />,
-      okText: 'Confirm',
       cancelText: 'Not now',
+      okText: 'Confirm',
       centered: true,
       async onOk() {
         const result = await Api.eos.transact(
