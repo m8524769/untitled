@@ -1,5 +1,13 @@
-import React, { Fragment } from 'react';
-import { Form, Input, Button, InputNumber, Modal, message } from 'antd';
+import React from 'react';
+import {
+  Form,
+  Input,
+  Button,
+  InputNumber,
+  Modal,
+  message,
+  PageHeader,
+} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { TOKEN_PRECISION, TOKEN_SYMBOL } from 'constants/eos';
 import Api from 'api';
@@ -47,7 +55,7 @@ const PublishFile: React.FC = () => {
   };
 
   return (
-    <Fragment>
+    <PageHeader title="Publish File">
       <Form
         layout="vertical"
         name="publish-file"
@@ -84,12 +92,12 @@ const PublishFile: React.FC = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button block type="primary" htmlType="submit">
             Checked & Publish
           </Button>
         </Form.Item>
       </Form>
-    </Fragment>
+    </PageHeader>
   );
 };
 

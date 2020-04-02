@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Typography, PageHeader } from 'antd';
 import Dragger from 'antd/lib/upload/Dragger';
 import { InboxOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import IPFS from 'ipfs';
@@ -37,7 +37,7 @@ const IpfsUpload: React.FC = () => {
   };
 
   return (
-    <Fragment>
+    <PageHeader title="IPFS Upload">
       <Dragger
         fileList={fileList}
         customRequest={(options) => {
@@ -97,7 +97,7 @@ const IpfsUpload: React.FC = () => {
           </Typography.Text>
         </div>
       )}
-    </Fragment>
+    </PageHeader>
   );
 };
 
