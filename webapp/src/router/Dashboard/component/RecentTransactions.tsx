@@ -8,6 +8,7 @@ import {
   Modal,
   Descriptions,
   Typography,
+  Badge,
 } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Api from 'api';
@@ -27,6 +28,7 @@ const columns = [
 
 const RecentTransactions: React.FC = () => {
   const [transactions, setTransactions] = useState([]);
+  const [lastIrreversibleBlock, setLastIrreversibleBlock] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const RecentTransactions: React.FC = () => {
     setLoading(true);
     const result = await Api.eos.rpc.history_get_actions(account);
     console.log(result);
+    setLastIrreversibleBlock(result.last_irreversible_block);
     setTransactions(
       result.actions
         .filter((action) => action.action_trace.receiver === 'yk')
@@ -81,20 +84,29 @@ const RecentTransactions: React.FC = () => {
                 Modal.info({
                   title: 'Transaction Details',
                   width: 670,
+                  okText: 'Got it',
                   content: (
-                    <Descriptions column={1}>
+                    <Descriptions column={1} style={{ marginTop: '16px' }}>
                       <Descriptions.Item label="Transaction ID">
                         <Typography.Text code copyable>
                           {record.action_trace.trx_id}
                         </Typography.Text>
                       </Descriptions.Item>
 
+                      <Descriptions.Item label="Status">
+                        {record.block_num <= lastIrreversibleBlock ? (
+                          <Badge status="success" text="Irreversible" />
+                        ) : (
+                          <Badge status="processing" text="Confirming" />
+                        )}
+                      </Descriptions.Item>
+
                       <Descriptions.Item label="Block Number">
-                        <Typography.Text>{record.block_num}</Typography.Text>
+                        {record.block_num}
                       </Descriptions.Item>
 
                       <Descriptions.Item label="Block Time">
-                        <Typography.Text>{record.block_time}</Typography.Text>
+                        {record.block_time}
                       </Descriptions.Item>
 
                       <Descriptions.Item label="Action">
@@ -110,7 +122,6 @@ const RecentTransactions: React.FC = () => {
                       </Descriptions.Item>
                     </Descriptions>
                   ),
-                  okText: 'Got it',
                 });
               },
             };
