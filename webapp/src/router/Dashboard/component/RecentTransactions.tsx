@@ -15,6 +15,10 @@ import Api from 'api';
 
 const columns = [
   {
+    dataIndex: ['block_time'],
+    render: (text) => text.replace('T', ' '),
+  },
+  {
     dataIndex: ['action_trace', 'act'],
     render: (text) => (
       <Tag color="purple">{`${text.account}::${text.name}`}</Tag>
@@ -60,7 +64,12 @@ const RecentTransactions: React.FC = () => {
         />
       }
     >
-      <Skeleton active loading={loading}>
+      <Skeleton
+        active
+        loading={loading}
+        title={false}
+        paragraph={{ rows: 6, width: 450 }}
+      >
         <Table
           columns={columns}
           dataSource={transactions}
@@ -106,7 +115,7 @@ const RecentTransactions: React.FC = () => {
                       </Descriptions.Item>
 
                       <Descriptions.Item label="Block Time">
-                        {record.block_time}
+                        {record.block_time.replace('T', ' ')}
                       </Descriptions.Item>
 
                       <Descriptions.Item label="Action">
