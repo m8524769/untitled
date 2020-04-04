@@ -122,9 +122,13 @@ const MyWallet: React.FC = () => {
       <Title level={2}>{balance}</Title>
       <Paragraph>≈＄8,371,928.17</Paragraph>
       <Space>
-        <Button>Withdraw</Button>
-        <Button>Recharge</Button>
-        <Button type="primary" onClick={() => setTokenTransferVisible(true)}>
+        <Button disabled={loading}>Withdraw</Button>
+        <Button disabled={loading}>Recharge</Button>
+        <Button
+          type="primary"
+          onClick={() => setTokenTransferVisible(true)}
+          disabled={loading}
+        >
           Transfer
         </Button>
       </Space>

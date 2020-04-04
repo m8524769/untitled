@@ -10,8 +10,10 @@ import {
   Typography,
   Badge,
 } from 'antd';
-import { SyncOutlined } from '@ant-design/icons';
+import { SyncOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Api from 'api';
+
+const PAGE_SIZE = 4;
 
 const columns = [
   {
@@ -33,6 +35,7 @@ const columns = [
 const RecentTransactions: React.FC = () => {
   const [transactions, setTransactions] = useState([]);
   const [lastIrreversibleBlock, setLastIrreversibleBlock] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -55,14 +58,32 @@ const RecentTransactions: React.FC = () => {
   return (
     <PageHeader
       title="Recent Transactions"
-      extra={
+      extra={[
+        <Button
+          type="link"
+          icon={<LeftOutlined />}
+          onClick={() => {
+            if (currentPage > 1) {
+              setCurrentPage(currentPage - 1);
+            }
+          }}
+        />,
+        <Button
+          type="link"
+          icon={<RightOutlined />}
+          onClick={() => {
+            if (currentPage < transactions.length / PAGE_SIZE) {
+              setCurrentPage(currentPage + 1);
+            }
+          }}
+        />,
         <Button
           shape="round"
           icon={<SyncOutlined />}
           loading={loading}
           onClick={() => getTransactions('yk')}
-        />
-      }
+        />,
+      ]}
     >
       <Skeleton
         active
@@ -80,7 +101,11 @@ const RecentTransactions: React.FC = () => {
           }}
           pagination={{
             simple: true,
-            pageSize: 4,
+            pageSize: PAGE_SIZE,
+            current: currentPage,
+            style: {
+              display: 'none',
+            },
           }}
           style={{
             maxWidth: '450px',
