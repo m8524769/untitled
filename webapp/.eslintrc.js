@@ -34,6 +34,7 @@ module.exports = {
   rules: {
     'no-unused-vars': 'off',
     'react/no-unescaped-entities': 'off',
+    'react/display-name': 'off',
     'prettier/prettier': 'warn',
   },
   settings: {

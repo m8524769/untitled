@@ -8,8 +8,7 @@ module.exports = {
   mode: 'production',
   entry: {  // <=4
     react: ['react', 'react-dom', 'react-router-dom'],
-    mobx: ['mobx'],
-    // lodash: ['lodash'],  // Unused
+    // mobx: ['mobx'],
     antd: ['antd'],  // Remove it in production mode
   },
   output: {

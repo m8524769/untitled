@@ -62,6 +62,7 @@ const RecentTransactions: React.FC = () => {
         <Button
           type="link"
           icon={<LeftOutlined />}
+          key="prev-page"
           onClick={() => {
             if (currentPage > 1) {
               setCurrentPage(currentPage - 1);
@@ -71,6 +72,7 @@ const RecentTransactions: React.FC = () => {
         <Button
           type="link"
           icon={<RightOutlined />}
+          key="next-page"
           onClick={() => {
             if (currentPage < transactions.length / PAGE_SIZE) {
               setCurrentPage(currentPage + 1);
@@ -81,6 +83,7 @@ const RecentTransactions: React.FC = () => {
           shape="round"
           icon={<SyncOutlined />}
           loading={loading}
+          key="refresh"
           onClick={() => getTransactions('yk')}
         />,
       ]}

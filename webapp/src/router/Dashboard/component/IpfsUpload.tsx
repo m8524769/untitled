@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, PageHeader } from 'antd';
-import Dragger from 'antd/lib/upload/Dragger';
+import { Typography, PageHeader, Upload } from 'antd';
 import { InboxOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import IPFS from 'ipfs';
 
@@ -38,7 +37,7 @@ const IpfsUpload: React.FC = () => {
 
   return (
     <PageHeader title="IPFS Upload">
-      <Dragger
+      <Upload.Dragger
         fileList={fileList}
         customRequest={(options) => {
           console.log(options);
@@ -87,7 +86,7 @@ const IpfsUpload: React.FC = () => {
             <p className="ant-upload-hint">You can copy the file's CID below</p>
           </div>
         )}
-      </Dragger>
+      </Upload.Dragger>
 
       {cid !== '' && (
         <div>
