@@ -1,7 +1,3 @@
-import authStore from 'router/Auth/AuthStore';
-
-const rootStore = {
-  authStore: authStore,
-};
+const rootStore = {};
 
 export default rootStore;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
-import LoginModal from 'router/Auth/component/LoginModal';
 
 class BasicLayout extends React.Component<any, any> {
   state = {
@@ -46,7 +45,6 @@ class BasicLayout extends React.Component<any, any> {
             {this.props.children}
           </div>
         </Layout.Content>
-        <LoginModal />
       </Layout>
     );
   }

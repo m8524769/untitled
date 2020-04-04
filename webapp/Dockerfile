@@ -1,14 +1,14 @@
 FROM node:latest
 
-RUN mkdir -p /admin-portal
-WORKDIR /admin-portal
+RUN mkdir -p /untitled-webapp
+WORKDIR /untitled-webapp
 
-COPY package.json /admin-portal
-COPY yarn.lock /admin-portal
-RUN cd /admin-portal && \
+COPY package.json /untitled-webapp
+COPY yarn.lock /untitled-webapp
+RUN cd /untitled-webapp && \
   yarn
 
-COPY . /admin-portal
+COPY . /untitled-webapp
 
 EXPOSE 4200
 CMD [ "yarn", "start" ]
