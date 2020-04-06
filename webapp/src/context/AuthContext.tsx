@@ -20,12 +20,14 @@ interface AuthContextType {
   eos: Api;
   account: any;
   login: () => void;
+  signout: () => void;
 }
 
 export const AuthContext = React.createContext({
   eos: null,
   account: null,
   login: () => {},
+  signout: () => {},
 } as AuthContextType);
 
 export const AuthProvider = ({ children }) => {
@@ -36,13 +38,9 @@ export const AuthProvider = ({ children }) => {
     login();
   }, []);
 
-  useEffect(() => {
-    console.log(eos);
-  }, [eos]);
-
-  useEffect(() => {
-    console.log(account);
-  }, [account]);
+  // Debug
+  useEffect(() => console.log(eos), [eos]);
+  useEffect(() => console.log(account), [account]);
 
   const login = () => {
     ScatterJS.connect('Untitled', { network }).then((connected) => {
@@ -64,8 +62,16 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  const signout = () => {
+    ScatterJS.logout().then(() => {
+      setEos(null);
+      setAccount({});
+      message.success('You are signed out');
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ eos, account, login }}>
+    <AuthContext.Provider value={{ eos, account, login, signout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -25,6 +25,9 @@ const MyWallet: React.FC = () => {
   useEffect(() => {
     if (account.name) {
       getBalance(account.name, TOKEN_SYMBOL);
+    } else {
+      setLoading(true);
+      setBalance('--');
     }
   }, [account]);
 

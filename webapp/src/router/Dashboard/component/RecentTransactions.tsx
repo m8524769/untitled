@@ -44,6 +44,9 @@ const RecentTransactions: React.FC = () => {
   useEffect(() => {
     if (account.name) {
       getTransactions(account.name);
+    } else {
+      setLoading(true);
+      setTransactions([]);
     }
   }, [account]);
 

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Layout, Menu, Dropdown, Row, Col, Button } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import { AuthContext } from 'context/AuthContext';
+import { ExportOutlined } from '@ant-design/icons';
 
 const navLinks = [
   {
@@ -14,14 +15,8 @@ const navLinks = [
   },
 ];
 
-const profileMenu = (
-  <Menu>
-    <Menu.Item>Sign out</Menu.Item>
-  </Menu>
-);
-
 const BasicLayout: React.FC = (props: any) => {
-  const { account, login } = useContext(AuthContext);
+  const { account, login, signout } = useContext(AuthContext);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -49,7 +44,16 @@ const BasicLayout: React.FC = (props: any) => {
             }}
           >
             {account.name ? (
-              <Dropdown overlay={profileMenu}>
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item onClick={signout}>
+                      <ExportOutlined />
+                      Sign out
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
                 <Button type="link">Current Account: {account.name}</Button>
               </Dropdown>
             ) : (
