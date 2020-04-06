@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, PageHeader, Space, message } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
@@ -8,6 +8,7 @@ import Api from 'api';
 import { TOKEN_SYMBOL } from 'constants/eos';
 import TokenTransfer, { TransferInfo } from './TokenTransfer';
 import { RpcError } from 'eosjs';
+import { AuthContext } from 'context/AuthContext';
 
 const MyWallet: React.FC = () => {
   const [balance, setBalance] = useState('--');
@@ -20,9 +21,13 @@ const MyWallet: React.FC = () => {
   const [tonkenTransferVisible, setTokenTransferVisible] = useState(false);
   const [transferLoading, setTransferLoading] = useState(false);
 
+  const { account } = useContext(AuthContext);
+
   useEffect(() => {
-    getBalance('yk', TOKEN_SYMBOL);
-  }, []);
+    if (account.name) {
+      getBalance(account.name, TOKEN_SYMBOL);
+    }
+  }, [account]);
 
   useInterval(() => {
     setUpdateTime(updateTime + 1);
@@ -75,12 +80,12 @@ const MyWallet: React.FC = () => {
               name: 'transfer',
               authorization: [
                 {
-                  actor: 'yk',
+                  actor: account.name,
                   permission: 'active',
                 },
               ],
               data: {
-                from: 'yk',
+                from: account.name,
                 ...transferInfo,
               },
             },
@@ -112,7 +117,7 @@ const MyWallet: React.FC = () => {
           shape="round"
           icon={<SyncOutlined />}
           loading={loading}
-          onClick={() => getBalance('yk', TOKEN_SYMBOL)}
+          onClick={() => getBalance(account.name, TOKEN_SYMBOL)}
         />
       }
       style={{
@@ -139,7 +144,7 @@ const MyWallet: React.FC = () => {
         transferLoading={transferLoading}
         onConfirm={(transferInfo) => {
           transfer(transferInfo).then(() => {
-            getBalance('yk', TOKEN_SYMBOL);
+            getBalance(account.name, TOKEN_SYMBOL);
           });
         }}
         onCancel={() => {

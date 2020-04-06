@@ -107,7 +107,7 @@ module.exports = {
       outputPath: 'vendor',
     }),
     new webpack.ContextReplacementPlugin(
-      /moment[/\\]locale$/, /zh-cn/
+      /moment[/\\]locale$/, /en-us/
     ),
   ]
 }

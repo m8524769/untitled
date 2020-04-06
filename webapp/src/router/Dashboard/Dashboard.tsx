@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tabs, Skeleton, Input } from 'antd';
 import MyWallet from './component/MyWallet';
 import RecentTransactions from './component/RecentTransactions';
 import IpfsUpload from './component/IpfsUpload';
 import PublishFile from './component/PublishFile';
+import MyFiles from './component/MyFiles';
 
 const Dashboard: React.FC = () => {
   return (
@@ -42,30 +42,14 @@ const Dashboard: React.FC = () => {
         <PublishFile></PublishFile>
       </div>
 
-      <Tabs
-        defaultActiveKey="1"
-        tabBarExtraContent={
-          <Input.Search
-            placeholder="Search files"
-            onSearch={() => {}}
-            enterButton
-          />
-        }
+      <div
         style={{
           gridColumn: '1 / 3',
           gridRow: '2 / 5',
-          padding: '16px 24px',
         }}
       >
-        <Tabs.TabPane tab="Bought Files" key="1">
-          <Skeleton active />
-          <Skeleton active />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Published Files" key="2">
-          <Skeleton active />
-          <Skeleton active />
-        </Tabs.TabPane>
-      </Tabs>
+        <MyFiles></MyFiles>
+      </div>
     </div>
   );
 };

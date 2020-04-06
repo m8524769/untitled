@@ -1,18 +1,21 @@
 import React from 'react';
 import { Provider } from 'mobx-react';
 import { ConfigProvider } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
+import en_US from 'antd/es/locale/en_US';
 import BasicLayout from './layout/BasicLayout';
 import rootStore from 'store/rootStore';
 import router from './router/router';
+import { AuthProvider } from 'context/AuthContext';
 
 import './App.css';
 
 const App: React.FC = () => {
   return (
-    <ConfigProvider locale={zhCN}>
+    <ConfigProvider locale={en_US}>
       <Provider {...rootStore}>
-        <BasicLayout>{router}</BasicLayout>
+        <AuthProvider>
+          <BasicLayout>{router}</BasicLayout>
+        </AuthProvider>
       </Provider>
     </ConfigProvider>
   );

@@ -1,23 +1,11 @@
-import React, { Fragment } from 'react';
-import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
 
-@inject('authStore')
-@observer
-class Home extends React.Component<any, any> {
-  state = {};
+const Home: React.FC = () => {
+  return (
+    <div>
+      <h1>Home</h1>
+    </div>
+  );
+};
 
-  componentDidMount() {}
-
-  render() {
-    // const { status } = this.props.homeStore;
-
-    return (
-      <Fragment>
-        <h1>Home Page</h1>
-      </Fragment>
-    );
-  }
-}
-
-export default withRouter(Home);
+export default Home;

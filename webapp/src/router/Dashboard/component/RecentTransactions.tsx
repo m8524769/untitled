@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Button,
   PageHeader,
@@ -12,6 +12,7 @@ import {
 } from 'antd';
 import { SyncOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Api from 'api';
+import { AuthContext } from 'context/AuthContext';
 
 const PAGE_SIZE = 4;
 
@@ -38,9 +39,13 @@ const RecentTransactions: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  const { account } = useContext(AuthContext);
+
   useEffect(() => {
-    getTransactions('yk');
-  }, []);
+    if (account.name) {
+      getTransactions(account.name);
+    }
+  }, [account]);
 
   const getTransactions = async (account: string) => {
     setLoading(true);
@@ -49,7 +54,7 @@ const RecentTransactions: React.FC = () => {
     setLastIrreversibleBlock(result.last_irreversible_block);
     setTransactions(
       result.actions
-        .filter((action) => action.action_trace.receiver === 'yk')
+        .filter((action) => action.action_trace.receiver === account)
         .reverse(),
     );
     setLoading(false);
@@ -84,7 +89,7 @@ const RecentTransactions: React.FC = () => {
           icon={<SyncOutlined />}
           loading={loading}
           key="refresh"
-          onClick={() => getTransactions('yk')}
+          onClick={() => getTransactions(account.name)}
         />,
       ]}
     >
