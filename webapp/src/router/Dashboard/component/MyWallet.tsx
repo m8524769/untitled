@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, PageHeader, Space, message } from 'antd';
+import { Button, PageHeader, Space, message, Statistic } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
-import Paragraph from 'antd/lib/typography/Paragraph';
 import useInterval from '@use-it/interval';
 import Api from 'api';
 import { TOKEN_SYMBOL } from 'constants/eos';
@@ -65,7 +64,8 @@ const MyWallet: React.FC = () => {
         setLoading(false);
         setUpdateTime(0);
         setUpdateTimeFormat('Updated just now');
-      });
+      })
+      .catch((error) => message.error(error));
   };
 
   const transfer = async (transferInfo: TransferInfo) => {
@@ -81,7 +81,7 @@ const MyWallet: React.FC = () => {
               authorization: [
                 {
                   actor: account.name,
-                  permission: 'active',
+                  permission: account.authority,
                 },
               ],
               data: {
@@ -125,8 +125,14 @@ const MyWallet: React.FC = () => {
       }}
     >
       <Title level={2}>{balance}</Title>
-      <Paragraph>≈＄8,371,928.17</Paragraph>
-      <Space>
+
+      <Statistic
+        prefix="＄"
+        value={parseFloat(balance.split(' ')[0]) * 416}
+        precision={2}
+      />
+
+      <Space style={{ marginTop: '24px' }}>
         <Button disabled={loading}>Withdraw</Button>
         <Button disabled={loading}>Recharge</Button>
         <Button

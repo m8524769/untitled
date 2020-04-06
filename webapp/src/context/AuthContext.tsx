@@ -16,19 +16,33 @@ const network = ScatterJS.Network.fromJson({
 
 const rpc = new JsonRpc(network.fullhost());
 
+interface AuthContextType {
+  eos: Api;
+  account: any;
+  login: () => void;
+}
+
 export const AuthContext = React.createContext({
   eos: null,
   account: null,
   login: () => {},
-});
+} as AuthContextType);
 
 export const AuthProvider = ({ children }) => {
-  const [eos, setEos] = useState({});
+  const [eos, setEos] = useState(null);
   const [account, setAccount] = useState({});
 
   useEffect(() => {
     login();
   }, []);
+
+  useEffect(() => {
+    console.log(eos);
+  }, [eos]);
+
+  useEffect(() => {
+    console.log(account);
+  }, [account]);
 
   const login = () => {
     ScatterJS.connect('Untitled', { network }).then((connected) => {

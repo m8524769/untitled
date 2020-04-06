@@ -35,6 +35,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/no-unescaped-entities': 'off',
     'react/display-name': 'off',
+    'react/prop-types': [2, { ignore: ['children'] }],
     'prettier/prettier': 'warn',
   },
   settings: {
