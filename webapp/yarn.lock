@@ -8719,17 +8719,17 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-mobx-react-lite@^1.4.2:
-  version "1.5.2"
-  resolved "https://registry.npm.taobao.org/mobx-react-lite/download/mobx-react-lite-1.5.2.tgz#c4395b0568b9cb16f07669d8869cc4efa1b8656d"
-  integrity sha1-xDlbBWi5yxbwdmnYhpzE76G4ZW0=
+mobx-react-lite@2:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/mobx-react-lite/download/mobx-react-lite-2.0.1.tgz#8ce860767cd87715b177a1625292f2403e7dd3ac"
+  integrity sha1-jOhgdnzYdxWxd6FiUpLyQD5906w=
 
-mobx-react@^6.1.3:
-  version "6.1.8"
-  resolved "https://registry.npm.taobao.org/mobx-react/download/mobx-react-6.1.8.tgz#5b9a3950463d58c154dda2c94d16d48ed8fcb02e"
-  integrity sha1-W5o5UEY9WMFU3aLJTRbUjtj8sC4=
+mobx-react@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npm.taobao.org/mobx-react/download/mobx-react-6.2.0.tgz#782b46bcfd505489a65882b74b78272155934501"
+  integrity sha1-eCtGvP1QVImmWIK3S3gnIVWTRQE=
   dependencies:
-    mobx-react-lite "^1.4.2"
+    mobx-react-lite "2"
 
 mobx@^5.13.0:
   version "5.15.4"
@@ -10573,10 +10573,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.npm.taobao.org/prettier/download/prettier-2.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprettier%2Fdownload%2Fprettier-2.0.3.tgz#9a06f0e94a51420e78b6925568b5bec72afe41ea"
-  integrity sha1-mgbw6UpRQg54tpJVaLW+xyr+Qeo=
+prettier@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/prettier/download/prettier-2.0.4.tgz?cache=0&sync_timestamp=1586174253764&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprettier%2Fdownload%2Fprettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
+  integrity sha1-LRuuFz41WZbuNV7Jgwp6HuBUV+8=
 
 pretty-bytes@^5.3.0:
   version "5.3.0"

@@ -4,31 +4,7 @@
     "types": [],
     "structs": [
         {
-            "name": "buyfile",
-            "base": "",
-            "fields": [
-                {
-                    "name": "buyer",
-                    "type": "name"
-                },
-                {
-                    "name": "id",
-                    "type": "uint64"
-                }
-            ]
-        },
-        {
-            "name": "clear",
-            "base": "",
-            "fields": []
-        },
-        {
             "name": "clearfile",
-            "base": "",
-            "fields": []
-        },
-        {
-            "name": "clearuser",
             "base": "",
             "fields": []
         },
@@ -37,11 +13,11 @@
             "base": "",
             "fields": [
                 {
-                    "name": "id",
-                    "type": "uint64"
+                    "name": "owner",
+                    "type": "name"
                 },
                 {
-                    "name": "filename",
+                    "name": "cid",
                     "type": "string"
                 },
                 {
@@ -67,11 +43,7 @@
                     "type": "name"
                 },
                 {
-                    "name": "hash",
-                    "type": "checksum256"
-                },
-                {
-                    "name": "filename",
+                    "name": "cid",
                     "type": "string"
                 },
                 {
@@ -83,67 +55,25 @@
                     "type": "uint64"
                 },
                 {
+                    "name": "for_sale",
+                    "type": "bool"
+                },
+                {
                     "name": "price",
                     "type": "asset"
                 }
             ]
         },
         {
-            "name": "hi",
+            "name": "sellfile",
             "base": "",
             "fields": [
                 {
-                    "name": "from",
-                    "type": "name"
+                    "name": "id",
+                    "type": "uint64"
                 },
                 {
-                    "name": "message",
-                    "type": "string"
-                }
-            ]
-        },
-        {
-            "name": "inituser",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
-                {
-                    "name": "info",
-                    "type": "string"
-                }
-            ]
-        },
-        {
-            "name": "message",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
-                {
-                    "name": "text",
-                    "type": "string"
-                }
-            ]
-        },
-        {
-            "name": "user",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
-                {
-                    "name": "info",
-                    "type": "string"
-                },
-                {
-                    "name": "balance",
+                    "name": "price",
                     "type": "asset"
                 }
             ]
@@ -151,23 +81,8 @@
     ],
     "actions": [
         {
-            "name": "buyfile",
-            "type": "buyfile",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "clear",
-            "type": "clear",
-            "ricardian_contract": ""
-        },
-        {
             "name": "clearfile",
             "type": "clearfile",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "clearuser",
-            "type": "clearuser",
             "ricardian_contract": ""
         },
         {
@@ -176,13 +91,8 @@
             "ricardian_contract": ""
         },
         {
-            "name": "hi",
-            "type": "hi",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "inituser",
-            "type": "inituser",
+            "name": "sellfile",
+            "type": "sellfile",
             "ricardian_contract": ""
         }
     ],
@@ -190,20 +100,6 @@
         {
             "name": "files",
             "type": "file",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "messages",
-            "type": "message",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "users",
-            "type": "user",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
