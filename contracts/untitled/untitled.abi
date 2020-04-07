@@ -4,7 +4,12 @@
     "types": [],
     "structs": [
         {
-            "name": "clearfile",
+            "name": "clearfiles",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "clearorders",
             "base": "",
             "fields": []
         },
@@ -65,6 +70,38 @@
             ]
         },
         {
+            "name": "order",
+            "base": "",
+            "fields": [
+                {
+                    "name": "file_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "buyer",
+                    "type": "name"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "placeorder",
+            "base": "",
+            "fields": [
+                {
+                    "name": "buyer",
+                    "type": "name"
+                },
+                {
+                    "name": "file_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "sellfile",
             "base": "",
             "fields": [
@@ -81,13 +118,23 @@
     ],
     "actions": [
         {
-            "name": "clearfile",
-            "type": "clearfile",
+            "name": "clearfiles",
+            "type": "clearfiles",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "clearorders",
+            "type": "clearorders",
             "ricardian_contract": ""
         },
         {
             "name": "createfile",
             "type": "createfile",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "placeorder",
+            "type": "placeorder",
             "ricardian_contract": ""
         },
         {
@@ -100,6 +147,13 @@
         {
             "name": "files",
             "type": "file",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "orders",
+            "type": "order",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

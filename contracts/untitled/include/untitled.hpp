@@ -15,7 +15,13 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void sellfile(uint64_t id, asset price);
 
     [[eosio::action]]
-    void clearfile();
+    void placeorder(name buyer, uint64_t file_id);
+
+    [[eosio::action]]
+    void clearfiles();
+
+    [[eosio::action]]
+    void clearorders();
 
     [[eosio::on_notify("eosio.token::transfer")]]
     void on_transfer(name from, name to, asset quantity, string memo);
@@ -32,5 +38,13 @@ class [[eosio::contract("untitled")]] untitled : public contract {
       auto primary_key() const { return id; }
     };
 
+    struct [[eosio::table]] order {
+      uint64_t  file_id;
+      name      buyer;
+      asset     price;
+      auto primary_key() const { return file_id; }
+    };
+
     typedef multi_index<name("files"), file> files_table;
+    typedef multi_index<name("orders"), order> orders_table;
 };
