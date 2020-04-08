@@ -1,5 +1,6 @@
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
+#include <eosio/system.hpp>
 
 using namespace std;
 using namespace eosio;
@@ -27,6 +28,8 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void on_transfer(name from, name to, asset quantity, string memo);
 
   private:
+    static const uint32_t order_security_period = 900;  // 15 miniutes
+
     struct [[eosio::table]] file {
       uint64_t  id;
       name      owner;
@@ -42,9 +45,14 @@ class [[eosio::contract("untitled")]] untitled : public contract {
       uint64_t  file_id;
       name      buyer;
       asset     price;
+      uint32_t  create_time;
       auto primary_key() const { return file_id; }
     };
 
     typedef multi_index<name("files"), file> files_table;
     typedef multi_index<name("orders"), order> orders_table;
+
+    uint32_t now() {
+      return current_time_point().sec_since_epoch();
+    }
 };

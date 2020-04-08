@@ -84,6 +84,10 @@
                 {
                     "name": "price",
                     "type": "asset"
+                },
+                {
+                    "name": "create_time",
+                    "type": "uint32"
                 }
             ]
         },

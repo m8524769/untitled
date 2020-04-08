@@ -46,7 +46,11 @@ void untitled::placeorder(name buyer, uint64_t file_id) {
   orders_table orders(get_self(), get_self().value);
 
   auto order_itr = orders.find(file_id);
-  check(order_itr == orders.end(), "You are late, dude");
+  if (order_itr != orders.end()) {
+    check(buyer != order_itr->buyer, "You have already placed this order");
+    check(now() - order_itr->create_time > order_security_period, "You are late, dude");
+    order_itr = orders.erase(order_itr);
+  }
 
   files_table files(get_self(), get_self().value);
 
@@ -60,6 +64,7 @@ void untitled::placeorder(name buyer, uint64_t file_id) {
     order.file_id = file_id;
     order.buyer = buyer;
     order.price = file_itr->price;
+    order.create_time = now();
   });
 }
 
