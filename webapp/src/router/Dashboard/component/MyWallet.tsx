@@ -100,15 +100,14 @@ const MyWallet: React.FC = () => {
         },
       );
       setTokenTransferVisible(false);
-      setTransferLoading(false);
       message.success(`Transaction id: ${result.transaction_id}`, 4);
       message.success('Transfer Successfully!');
     } catch (e) {
-      setTransferLoading(false);
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
       }
     }
+    setTransferLoading(false);
   };
 
   return (

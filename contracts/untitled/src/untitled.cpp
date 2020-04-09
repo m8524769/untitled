@@ -57,8 +57,8 @@ void untitled::placeorder(name buyer, uint64_t file_id) {
   auto file_itr = files.find(file_id);
   check(file_itr != files.end(), "File does not exist");
 
-  check(file_itr->for_sale == true, "This file is not for sale");
   check(buyer != file_itr->owner, "This file is already yours");
+  check(file_itr->for_sale == true, "This file is not for sale");
 
   orders.emplace(buyer, [&](auto &order) {
     order.file_id = file_id;
@@ -94,14 +94,19 @@ void untitled::clearorders() {
 
 [[eosio::on_notify("eosio.token::transfer")]]
 void untitled::on_transfer(name from, name to, asset quantity, string memo) {
+  if (memo == "income")
+    return;
+
+  check(memo != "", "You should fill in the file ID in memo");
+
   files_table files(get_self(), get_self().value);
 
   // Find file by memo (convert string to uint64_t)
   auto file_itr = files.find(stoull(memo));
   check(file_itr != files.end(), "File does not exist");
 
+  check(from != file_itr->owner, "This file is already yours");
   check(file_itr->for_sale == true, "This file is not for sale");
-  check(to == file_itr->owner, "Illegal file transaction");
 
   // Check Order
   orders_table orders(get_self(), get_self().value);
@@ -119,6 +124,15 @@ void untitled::on_transfer(name from, name to, asset quantity, string memo) {
     check(quantity.symbol == file_itr->price.symbol, "Illegal asset symbol");
     check(quantity.amount >= file_itr->price.amount, "Insufficient amount");
   }
+
+  // Need `eosio.code` permission to run inline actions, command:
+  // cleos set account permission <CONTRACT_ACCOUNT> active --add-code
+  action(
+    permission_level{get_self(), "active"_n},
+    "eosio.token"_n,
+    "transfer"_n,
+    make_tuple(get_self(), file_itr->owner, quantity, string("income"))
+  ).send();
 
   files.modify(file_itr, get_self(), [&](auto &file) {
     file.owner = from;

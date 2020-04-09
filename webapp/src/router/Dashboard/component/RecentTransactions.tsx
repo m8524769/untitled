@@ -9,10 +9,12 @@ import {
   Descriptions,
   Typography,
   Badge,
+  message,
 } from 'antd';
 import { SyncOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Api from 'api';
 import { AuthContext } from 'context/AuthContext';
+import { RpcError } from 'eosjs';
 
 const PAGE_SIZE = 4;
 
@@ -52,14 +54,20 @@ const RecentTransactions: React.FC = () => {
 
   const getTransactions = async (account: string) => {
     setLoading(true);
-    const result = await Api.eos.rpc.history_get_actions(account);
-    console.log(result);
-    setLastIrreversibleBlock(result.last_irreversible_block);
-    setTransactions(
-      result.actions
-        .filter((action) => action.action_trace.receiver === account)
-        .reverse(),
-    );
+    try {
+      const result = await Api.eos.rpc.history_get_actions(account);
+      console.log(result);
+      setLastIrreversibleBlock(result.last_irreversible_block);
+      setTransactions(
+        result.actions
+          // .filter((action) => action.action_trace.receiver === account)
+          .reverse(),
+      );
+    } catch (e) {
+      if (e instanceof RpcError) {
+        message.error(JSON.stringify(e.json, null, 2));
+      }
+    }
     setLoading(false);
   };
 

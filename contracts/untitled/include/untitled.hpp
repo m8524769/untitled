@@ -1,6 +1,7 @@
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
+#include <eosio/transaction.hpp>
 
 using namespace std;
 using namespace eosio;
