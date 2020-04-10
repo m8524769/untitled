@@ -69,6 +69,18 @@ void untitled::placeorder(name buyer, uint64_t file_id) {
 }
 
 [[eosio::action]]
+void untitled::cancelorder(uint64_t file_id) {
+  orders_table orders(get_self(), get_self().value);
+
+  auto order_itr = orders.find(file_id);
+  check(order_itr != orders.end(), "Order does not exist");
+
+  require_auth( order_itr->buyer );
+
+  order_itr = orders.erase(order_itr);
+}
+
+[[eosio::action]]
 void untitled::clearfiles() {
   require_auth( get_self() );
 

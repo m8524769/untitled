@@ -1,7 +1,6 @@
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
 #include <eosio/system.hpp>
-#include <eosio/transaction.hpp>
 
 using namespace std;
 using namespace eosio;
@@ -18,6 +17,9 @@ class [[eosio::contract("untitled")]] untitled : public contract {
 
     [[eosio::action]]
     void placeorder(name buyer, uint64_t file_id);
+
+    [[eosio::action]]
+    void cancelorder(uint64_t file_id);
 
     [[eosio::action]]
     void clearfiles();

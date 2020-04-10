@@ -4,6 +4,16 @@
     "types": [],
     "structs": [
         {
+            "name": "cancelorder",
+            "base": "",
+            "fields": [
+                {
+                    "name": "file_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "clearfiles",
             "base": "",
             "fields": []
@@ -121,6 +131,11 @@
         }
     ],
     "actions": [
+        {
+            "name": "cancelorder",
+            "type": "cancelorder",
+            "ricardian_contract": ""
+        },
         {
             "name": "clearfiles",
             "type": "clearfiles",
