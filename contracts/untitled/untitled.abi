@@ -40,6 +40,10 @@
                     "type": "string"
                 },
                 {
+                    "name": "size",
+                    "type": "uint64"
+                },
+                {
                     "name": "price",
                     "type": "asset"
                 }

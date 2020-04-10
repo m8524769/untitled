@@ -1589,10 +1589,18 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.9.32":
+"@types/react@*":
   version "16.9.32"
   resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.9.32.tgz#f6368625b224604148d1ddf5920e4fefbd98d383"
   integrity sha1-9jaGJbIkYEFI0d31kg5P772Y04M=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.9.34":
+  version "16.9.34"
+  resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.9.34.tgz?cache=0&sync_timestamp=1586464409519&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-16.9.34.tgz#f7d5e331c468f53affed17a8a4d488cd44ea9349"
+  integrity sha1-99XjMcRo9Tr/7ReopNSIzUTqk0k=
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -3941,7 +3949,16 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-datastore-core@^0.7.0, datastore-core@~0.7.0:
+datastore-core@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/datastore-core/download/datastore-core-1.0.0.tgz#010fdb12ba2e47ea56c189aa0be5deffd3073755"
+  integrity sha1-AQ/bErouR+pWwYmqC+Xe/9MHN1U=
+  dependencies:
+    buffer "^5.5.0"
+    debug "^4.1.1"
+    interface-datastore "^0.8.2"
+
+datastore-core@~0.7.0:
   version "0.7.0"
   resolved "https://registry.npm.taobao.org/datastore-core/download/datastore-core-0.7.0.tgz#c5d3cded07f3c81ca49c5ee6f20e9a60cc03adf1"
   integrity sha1-xdPN7QfzyByknF7m8g6aYMwDrfE=
@@ -5982,10 +5999,10 @@ html-minifier-terser@^5.0.1:
     relateurl "^0.2.7"
     terser "^4.6.3"
 
-html-webpack-plugin@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npm.taobao.org/html-webpack-plugin/download/html-webpack-plugin-4.0.4.tgz#90cdfb168094e93e047174d9baca098ec5540636"
-  integrity sha1-kM37FoCU6T4EcXTZusoJjsVUBjY=
+html-webpack-plugin@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npm.taobao.org/html-webpack-plugin/download/html-webpack-plugin-4.2.0.tgz?cache=0&sync_timestamp=1586450065368&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhtml-webpack-plugin%2Fdownload%2Fhtml-webpack-plugin-4.2.0.tgz#ea46f15b620d4c1c8c73ea399395c81208e9f823"
+  integrity sha1-6kbxW2INTByMc+o5k5XIEgjp+CM=
   dependencies:
     "@types/html-minifier-terser" "^5.0.0"
     "@types/tapable" "^1.0.5"
@@ -6267,6 +6284,18 @@ interface-datastore@^0.8.0, interface-datastore@~0.8.0:
     iso-random-stream "^1.1.1"
     nanoid "^2.1.11"
 
+interface-datastore@^0.8.2:
+  version "0.8.3"
+  resolved "https://registry.npm.taobao.org/interface-datastore/download/interface-datastore-0.8.3.tgz#1b948d9f8231edbaaec763a75a339e70e5f48883"
+  integrity sha1-G5SNn4Ix7bqux2OnWjOecOX0iIM=
+  dependencies:
+    buffer "^5.5.0"
+    class-is "^1.1.0"
+    err-code "^2.0.0"
+    ipfs-utils "^1.2.3"
+    iso-random-stream "^1.1.1"
+    nanoid "^3.0.2"
+
 interface-datastore@~0.7.0:
   version "0.7.0"
   resolved "https://registry.npm.taobao.org/interface-datastore/download/interface-datastore-0.7.0.tgz#3ab43d21089c03ac7d65651ed1e7e4d81397f4f4"
@@ -6377,14 +6406,14 @@ ipfs-block@^0.8.0, ipfs-block@^0.8.1, ipfs-block@~0.8.0, ipfs-block@~0.8.1:
     cids "~0.7.0"
     class-is "^1.1.0"
 
-ipfs-core-utils@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.npm.taobao.org/ipfs-core-utils/download/ipfs-core-utils-0.0.1.tgz#eaa6a9677f2c134a66511922031fe6556972a297"
-  integrity sha1-6qapZ38sE0pmURkiAx/mVWlyopc=
+ipfs-core-utils@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npm.taobao.org/ipfs-core-utils/download/ipfs-core-utils-0.1.1.tgz#bc60d051070667670e295af6084360cd4db554d4"
+  integrity sha1-vGDQUQcGZ2cOKVr2CENgzU21VNQ=
   dependencies:
     buffer "^5.4.2"
     err-code "^2.0.0"
-    ipfs-utils "^1.0.0"
+    ipfs-utils "^1.2.4"
 
 ipfs-http-client@^42.0.0:
   version "42.0.0"
@@ -6417,10 +6446,10 @@ ipfs-http-client@^42.0.0:
     parse-duration "^0.1.1"
     stream-to-it "^0.2.0"
 
-ipfs-http-client@^43.0.0:
-  version "43.0.0"
-  resolved "https://registry.npm.taobao.org/ipfs-http-client/download/ipfs-http-client-43.0.0.tgz#1c7904ee764d244ede9765ac066bbe36695284bc"
-  integrity sha1-HHkE7nZNJE7el2WsBmu+NmlShLw=
+ipfs-http-client@^43.0.1:
+  version "43.0.1"
+  resolved "https://registry.npm.taobao.org/ipfs-http-client/download/ipfs-http-client-43.0.1.tgz#d0dd7ab807b6efdf27239acc5b191d0a51c9e7fa"
+  integrity sha1-0N16uAe2798nI5rMWxkdClHJ5/o=
   dependencies:
     abort-controller "^3.0.0"
     bignumber.js "^9.0.0"
@@ -6430,8 +6459,8 @@ ipfs-http-client@^43.0.0:
     debug "^4.1.0"
     form-data "^3.0.0"
     ipfs-block "^0.8.1"
-    ipfs-core-utils "^0.0.1"
-    ipfs-utils "^1.0.0"
+    ipfs-core-utils "^0.1.1"
+    ipfs-utils "^1.2.4"
     ipld-dag-cbor "^0.15.1"
     ipld-dag-pb "^0.18.3"
     ipld-raw "^4.0.1"
@@ -6558,7 +6587,7 @@ ipfs-utils@^0.7.1:
     ky-universal "^0.3.0"
     stream-to-it "^0.2.0"
 
-ipfs-utils@^1.0.0, ipfs-utils@^1.1.0:
+ipfs-utils@^1.1.0:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/ipfs-utils/download/ipfs-utils-1.2.1.tgz#1a2ef059ee475fb4584a98b1cb0999ab004a13d9"
   integrity sha1-Gi7wWe5HX7RYSpixywmZqwBKE9k=
@@ -6575,10 +6604,27 @@ ipfs-utils@^1.0.0, ipfs-utils@^1.1.0:
     node-fetch "^2.6.0"
     stream-to-it "^0.2.0"
 
-ipfs@^0.42.0:
-  version "0.42.0"
-  resolved "https://registry.npm.taobao.org/ipfs/download/ipfs-0.42.0.tgz#e6faff63bd9589940c777e63c17f1573d09ed50a"
-  integrity sha1-5vr/Y72ViZQMd35jwX8Vc9Ce1Qo=
+ipfs-utils@^1.2.3, ipfs-utils@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npm.taobao.org/ipfs-utils/download/ipfs-utils-1.2.4.tgz#209845db3f6493dbd185333eb09c5e9ee345ddc9"
+  integrity sha1-IJhF2z9kk9vRhTM+sJxenuNF3ck=
+  dependencies:
+    abort-controller "^3.0.0"
+    buffer "^5.4.2"
+    err-code "^2.0.0"
+    fs-extra "^9.0.0"
+    is-electron "^2.2.0"
+    iso-url "^0.4.7"
+    it-glob "0.0.7"
+    merge-options "^2.0.0"
+    nanoid "^2.1.11"
+    node-fetch "^2.6.0"
+    stream-to-it "^0.2.0"
+
+ipfs@^0.42.1:
+  version "0.42.1"
+  resolved "https://registry.npm.taobao.org/ipfs/download/ipfs-0.42.1.tgz#8f29b97c40a8dd5f29b09bbfd79e5dcad8908564"
+  integrity sha1-jym5fECo3V8psJu/155dytiQhWQ=
   dependencies:
     "@hapi/ammo" "^3.1.2"
     "@hapi/boom" "^7.4.3"
@@ -6597,7 +6643,7 @@ ipfs@^0.42.0:
     cids "^0.8.0"
     class-is "^1.1.0"
     dag-cbor-links "^1.3.2"
-    datastore-core "^0.7.0"
+    datastore-core "^1.0.0"
     datastore-level "^0.14.1"
     datastore-pubsub "^0.3.0"
     debug "^4.1.0"
@@ -6613,14 +6659,14 @@ ipfs@^0.42.0:
     ipfs-bitswap "^0.27.1"
     ipfs-block "^0.8.1"
     ipfs-block-service "^0.16.0"
-    ipfs-core-utils "^0.0.1"
-    ipfs-http-client "^43.0.0"
+    ipfs-core-utils "^0.1.1"
+    ipfs-http-client "^43.0.1"
     ipfs-http-response "^0.5.0"
     ipfs-repo "^1.0.1"
     ipfs-unixfs "^1.0.1"
     ipfs-unixfs-exporter "^1.0.3"
     ipfs-unixfs-importer "^1.0.3"
-    ipfs-utils "^1.0.0"
+    ipfs-utils "^1.2.4"
     ipld "^0.25.0"
     ipld-bitcoin "^0.3.0"
     ipld-dag-cbor "^0.15.1"
@@ -6631,7 +6677,7 @@ ipfs@^0.42.0:
     ipld-zcash "^0.4.0"
     ipns "^0.7.0"
     is-domain-name "^1.0.1"
-    is-ipfs "^0.6.1"
+    is-ipfs "^1.0.0"
     it-all "^1.0.1"
     it-concat "^1.0.0"
     it-drain "^1.0.0"
@@ -7013,17 +7059,18 @@ is-ip@^3.1.0:
   dependencies:
     ip-regex "^4.0.0"
 
-is-ipfs@^0.6.1:
-  version "0.6.3"
-  resolved "https://registry.npm.taobao.org/is-ipfs/download/is-ipfs-0.6.3.tgz#82a5350e0a42d01441c40b369f8791e91404c497"
-  integrity sha1-gqU1DgpC0BRBxAs2n4eR6RQExJc=
+is-ipfs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/is-ipfs/download/is-ipfs-1.0.0.tgz#bb286d9a933eee0189932ca6d762e94ca85996ea"
+  integrity sha1-uyhtmpM+7gGJkyym12LpTKhZluo=
   dependencies:
     bs58 "^4.0.1"
-    cids "~0.7.0"
-    mafmt "^7.0.0"
-    multiaddr "^7.2.1"
-    multibase "~0.6.0"
-    multihashes "~0.4.13"
+    cids "~0.8.0"
+    iso-url "~0.4.7"
+    mafmt "^7.1.0"
+    multiaddr "^7.4.3"
+    multibase "~0.7.0"
+    multihashes "~0.4.19"
 
 is-module@^1.0.0:
   version "1.0.0"
@@ -8852,10 +8899,10 @@ mobx-react-lite@2:
   resolved "https://registry.npm.taobao.org/mobx-react-lite/download/mobx-react-lite-2.0.1.tgz#8ce860767cd87715b177a1625292f2403e7dd3ac"
   integrity sha1-jOhgdnzYdxWxd6FiUpLyQD5906w=
 
-mobx-react@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.npm.taobao.org/mobx-react/download/mobx-react-6.2.1.tgz#2f2cf7be2e9f9b4661a31cec3b70b8116b1ebeff"
-  integrity sha1-Lyz3vi6fm0ZhoxzsO3C4EWsevv8=
+mobx-react@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.npm.taobao.org/mobx-react/download/mobx-react-6.2.2.tgz#45e8e7c4894cac8399bba0a91060d7cfb8ea084b"
+  integrity sha1-RejnxIlMrIOZu6CpEGDXz7jqCEs=
   dependencies:
     mobx-react-lite "2"
 
@@ -8924,7 +8971,7 @@ multiaddr-to-uri@^5.0.0, multiaddr-to-uri@^5.1.0:
   dependencies:
     multiaddr "^7.2.1"
 
-multiaddr@^7.1.0, multiaddr@^7.2.1, multiaddr@^7.3.0:
+multiaddr@^7.1.0, multiaddr@^7.2.1, multiaddr@^7.3.0, multiaddr@^7.4.3:
   version "7.4.3"
   resolved "https://registry.npm.taobao.org/multiaddr/download/multiaddr-7.4.3.tgz#0626945acf309f1c811a95613a0a4371c7aa6109"
   integrity sha1-BiaUWs8wnxyBGpVhOgpDcceqYQk=
@@ -8981,7 +9028,7 @@ multicodec@^1.0.0, multicodec@^1.0.1:
     buffer "^5.5.0"
     varint "^5.0.0"
 
-multihashes@^0.4.14, multihashes@~0.4.13, multihashes@~0.4.14, multihashes@~0.4.15, multihashes@~0.4.17:
+multihashes@^0.4.14, multihashes@~0.4.14, multihashes@~0.4.15, multihashes@~0.4.17, multihashes@~0.4.19:
   version "0.4.19"
   resolved "https://registry.npm.taobao.org/multihashes/download/multihashes-0.4.19.tgz#d7493cf028e48747122f350908ea13d12d204813"
   integrity sha1-10k88Cjkh0cSLzUJCOoT0S0gSBM=
@@ -13248,10 +13295,10 @@ urix@^0.1.0:
   resolved "https://registry.npm.taobao.org/urix/download/urix-0.1.0.tgz?cache=0&sync_timestamp=1585438689517&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Furix%2Fdownload%2Furix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
-url-loader@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/url-loader/download/url-loader-4.0.0.tgz#946719464089e35804009270339f21124e8dd27e"
-  integrity sha1-lGcZRkCJ41gEAJJwM58hEk6N0n4=
+url-loader@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/url-loader/download/url-loader-4.1.0.tgz#c7d6b0d6b0fccd51ab3ffc58a78d32b8d89a7be2"
+  integrity sha1-x9aw1rD8zVGrP/xYp40yuNiae+I=
   dependencies:
     loader-utils "^2.0.0"
     mime-types "^2.1.26"

@@ -15,6 +15,7 @@ import { SyncOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Api from 'api';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
+import { CONTRACT_ACCOUNT } from 'constants/eos';
 
 const PAGE_SIZE = 4;
 
@@ -26,7 +27,9 @@ const columns = [
   {
     dataIndex: ['action_trace', 'act'],
     render: (text) => (
-      <Tag color="purple">{`${text.account}::${text.name}`}</Tag>
+      <Tag color={text.account === CONTRACT_ACCOUNT ? 'geekblue' : 'purple'}>
+        {`${text.account}::${text.name}`}
+      </Tag>
     ),
   },
   {
@@ -60,7 +63,11 @@ const RecentTransactions: React.FC = () => {
       setLastIrreversibleBlock(result.last_irreversible_block);
       setTransactions(
         result.actions
-          // .filter((action) => action.action_trace.receiver === account)
+          .filter(
+            (action) =>
+              action.action_trace.act.name !== 'transfer' ||
+              action.action_trace.receiver === account,
+          )
           .reverse(),
       );
     } catch (e) {
@@ -162,8 +169,24 @@ const RecentTransactions: React.FC = () => {
                         {record.block_time.replace('T', ' ')}
                       </Descriptions.Item>
 
+                      <Descriptions.Item label="Authorization">
+                        {record.action_trace.act.authorization.map(
+                          (authorization) => (
+                            <Tag color="green" key="authorization.actor">
+                              {`${authorization.actor}@${authorization.permission}`}
+                            </Tag>
+                          ),
+                        )}
+                      </Descriptions.Item>
+
                       <Descriptions.Item label="Action">
-                        <Tag color="purple">
+                        <Tag
+                          color={
+                            record.action_trace.act.account === CONTRACT_ACCOUNT
+                              ? 'geekblue'
+                              : 'purple'
+                          }
+                        >
                           {`${record.action_trace.act.account}::${record.action_trace.act.name}`}
                         </Tag>
                       </Descriptions.Item>

@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, Input, Button, Modal, message, PageHeader, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { CONTRACT_ACCOUNT, TOKEN_SYMBOL } from 'constants/eos';
 import Api from 'api';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
+import IPFS from 'ipfs';
 
 interface NewFileInfo {
   cid: string;
@@ -13,11 +14,34 @@ interface NewFileInfo {
 }
 
 const PublishFile: React.FC = () => {
+  const [ipfs, setIpfs] = useState(null);
+  const [fileSize, setFileSize] = useState(0);
   const [publishLoading, setPublishLoading] = useState(false);
 
   const [form] = Form.useForm();
 
   const { account } = useContext(AuthContext);
+
+  useEffect(() => {
+    initIpfsNode();
+  }, []);
+
+  const initIpfsNode = async () => {
+    const node = await IPFS.create();
+    setIpfs(node);
+  };
+
+  const cidValidator = async (rule, value) => {
+    try {
+      for await (const file of ipfs.files.ls(`/ipfs/${value}`)) {
+        console.log(file);
+        setFileSize(file.size);
+      }
+    } catch (e) {
+      setFileSize(0);
+      throw new Error('File does not exist on IPFS');
+    }
+  };
 
   const createFile = async (newFileInfo: NewFileInfo) => {
     console.log(newFileInfo);
@@ -38,6 +62,7 @@ const PublishFile: React.FC = () => {
               data: {
                 owner: account.name,
                 ...newFileInfo,
+                size: fileSize,
               },
             },
           ],
@@ -83,8 +108,21 @@ const PublishFile: React.FC = () => {
         name="publish-file"
         onFinish={onFinish}
       >
-        <Form.Item label="CID" name="cid" rules={[{ required: true }]}>
-          <Input.Password placeholder="Content identifier on IPFS" />
+        <Form.Item
+          label="CID"
+          name="cid"
+          hasFeedback={true}
+          rules={[
+            {
+              required: true,
+              validator: cidValidator,
+            },
+          ]}
+        >
+          <Input.Password
+            placeholder="Content identifier on IPFS"
+            disabled={!ipfs}
+          />
         </Form.Item>
 
         <Form.Item

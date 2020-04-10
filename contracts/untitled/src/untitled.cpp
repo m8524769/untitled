@@ -1,7 +1,7 @@
 #include <untitled.hpp>
 
 [[eosio::action]]
-void untitled::createfile(name owner, string cid, string description, asset price) {
+void untitled::createfile(name owner, string cid, string description, uint64_t size, asset price) {
   require_auth( owner );
 
   files_table files(get_self(), get_self().value);
@@ -19,6 +19,7 @@ void untitled::createfile(name owner, string cid, string description, asset pric
     file.owner = owner;
     file.cid = cid;
     file.description = description;
+    file.size = size;
     file.for_sale = true;
     file.price = price;
   });

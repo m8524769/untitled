@@ -10,7 +10,7 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     using contract::contract;
 
     [[eosio::action]]
-    void createfile(name owner, string cid, string description, asset price);
+    void createfile(name owner, string cid, string description, uint64_t size, asset price);
 
     [[eosio::action]]
     void sellfile(uint64_t id, asset price);
