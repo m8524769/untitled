@@ -1,14 +1,14 @@
 #include <untitled.hpp>
 
 [[eosio::action]]
-void untitled::createfile(name owner, string cid, string description, uint64_t size, asset price) {
+void untitled::createfile(name owner, string encrypted_cid, string cid_hash, string description, uint64_t size, asset price) {
   require_auth( owner );
 
   files_table files(get_self(), get_self().value);
 
   bool existing = false;
   for (auto file_itr = files.begin(); file_itr != files.end() && existing != true; ++file_itr) {
-    if (file_itr->cid == cid) {
+    if (file_itr->cid_hash == cid_hash) {
       existing = true;
     }
   }
@@ -17,7 +17,8 @@ void untitled::createfile(name owner, string cid, string description, uint64_t s
   files.emplace(owner, [&](auto &file) {
     file.id = files.available_primary_key();
     file.owner = owner;
-    file.cid = cid;
+    file.encrypted_cid = encrypted_cid;
+    file.cid_hash = cid_hash;
     file.description = description;
     file.size = size;
     file.for_sale = true;
@@ -82,10 +83,10 @@ void untitled::cancelorder(uint64_t file_id) {
 }
 
 [[eosio::action]]
-void untitled::clearfiles() {
+void untitled::clearfiles(name account) {
   require_auth( get_self() );
 
-  files_table files(get_self(), get_self().value);
+  files_table files(get_self(), account.value);
 
   auto file_itr = files.begin();
   while (file_itr != files.end()) {
@@ -94,14 +95,33 @@ void untitled::clearfiles() {
 }
 
 [[eosio::action]]
-void untitled::clearorders() {
+void untitled::clearorders(name account) {
   require_auth( get_self() );
 
-  orders_table orders(get_self(), get_self().value);
+  orders_table orders(get_self(), account.value);
 
   auto order_itr = orders.begin();
   while (order_itr != orders.end()) {
     order_itr = orders.erase(order_itr);
+  }
+}
+
+[[eosio::action]]
+void untitled::setkey(name account, string rsa_public_key) {
+  require_auth( account );
+
+  check(rsa_public_key != "", "RSA public key is required");
+
+  rsa_key_table keys(get_self(), account.value);
+
+  if (keys.begin() == keys.end()) {
+    keys.emplace(account, [&](auto &key) {
+      key.public_key = rsa_public_key;
+    });
+  } else {
+    keys.modify(keys.begin(), account, [&](auto &key) {
+      key.public_key = rsa_public_key;
+    });
   }
 }
 

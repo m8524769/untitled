@@ -3,7 +3,7 @@ import MyWallet from './component/MyWallet';
 import RecentTransactions from './component/RecentTransactions';
 import IpfsUpload from './component/IpfsUpload';
 import PublishFile from './component/PublishFile';
-import MyFiles from './component/MyFiles';
+import Profile from './component/Profile';
 
 const Dashboard: React.FC = () => {
   return (
@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
           gridRow: '2 / 5',
         }}
       >
-        <MyFiles></MyFiles>
+        <Profile></Profile>
       </div>
     </div>
   );

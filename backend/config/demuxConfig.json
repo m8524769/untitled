@@ -1,0 +1,6 @@
+{
+  "nodeosEndpoint": "http://127.0.0.1:8888",
+  "startAtBlock": 216440,
+  "onlyIrreversible": true,
+  "pollInterval": 250
+}

@@ -39,8 +39,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Debug
-  useEffect(() => console.log(eos), [eos]);
-  useEffect(() => console.log(account), [account]);
+  // useEffect(() => console.log(eos), [eos]);
+  // useEffect(() => console.log(account), [account]);
 
   const login = () => {
     ScatterJS.connect('Untitled', { network }).then((connected) => {

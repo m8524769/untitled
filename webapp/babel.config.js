@@ -4,7 +4,6 @@ module.exports = function (api) {
   const presets = [
     '@babel/preset-react',
     '@babel/preset-env',
-    'mobx',
   ];
 
   const plugins = [

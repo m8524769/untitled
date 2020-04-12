@@ -16,12 +16,22 @@
         {
             "name": "clearfiles",
             "base": "",
-            "fields": []
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
         },
         {
             "name": "clearorders",
             "base": "",
-            "fields": []
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
         },
         {
             "name": "createfile",
@@ -32,7 +42,11 @@
                     "type": "name"
                 },
                 {
-                    "name": "cid",
+                    "name": "encrypted_cid",
+                    "type": "string"
+                },
+                {
+                    "name": "cid_hash",
                     "type": "string"
                 },
                 {
@@ -62,7 +76,11 @@
                     "type": "name"
                 },
                 {
-                    "name": "cid",
+                    "name": "encrypted_cid",
+                    "type": "string"
+                },
+                {
+                    "name": "cid_hash",
                     "type": "string"
                 },
                 {
@@ -120,6 +138,16 @@
             ]
         },
         {
+            "name": "rsa_key",
+            "base": "",
+            "fields": [
+                {
+                    "name": "public_key",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "sellfile",
             "base": "",
             "fields": [
@@ -130,6 +158,20 @@
                 {
                     "name": "price",
                     "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "setkey",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "rsa_public_key",
+                    "type": "string"
                 }
             ]
         }
@@ -164,6 +206,11 @@
             "name": "sellfile",
             "type": "sellfile",
             "ricardian_contract": ""
+        },
+        {
+            "name": "setkey",
+            "type": "setkey",
+            "ricardian_contract": ""
         }
     ],
     "tables": [
@@ -177,6 +224,13 @@
         {
             "name": "orders",
             "type": "order",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "rsa.keys",
+            "type": "rsa_key",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

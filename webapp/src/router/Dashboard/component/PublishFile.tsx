@@ -6,6 +6,8 @@ import Api from 'api';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import IPFS from 'ipfs';
+import NodeRSA from 'node-rsa';
+import Hashes from 'jshashes';
 
 interface NewFileInfo {
   cid: string;
@@ -15,6 +17,7 @@ interface NewFileInfo {
 
 const PublishFile: React.FC = () => {
   const [ipfs, setIpfs] = useState(null);
+  const [contractRsaPublicKey, setContractRsaPublicKey] = useState('');
   const [fileSize, setFileSize] = useState(0);
   const [publishLoading, setPublishLoading] = useState(false);
 
@@ -24,6 +27,7 @@ const PublishFile: React.FC = () => {
 
   useEffect(() => {
     initIpfsNode();
+    getContractRsaPublicKey();
   }, []);
 
   const initIpfsNode = async () => {
@@ -31,10 +35,20 @@ const PublishFile: React.FC = () => {
     setIpfs(node);
   };
 
+  const getContractRsaPublicKey = async () => {
+    const result = await Api.eos.rpc.get_table_rows({
+      json: true,
+      code: CONTRACT_ACCOUNT,
+      scope: CONTRACT_ACCOUNT,
+      table: 'rsa.keys',
+      limit: 1,
+    });
+    setContractRsaPublicKey(result.rows[0].public_key);
+  };
+
   const cidValidator = async (rule, value) => {
     try {
       for await (const file of ipfs.files.ls(`/ipfs/${value}`)) {
-        console.log(file);
         setFileSize(file.size);
       }
     } catch (e) {
@@ -43,8 +57,15 @@ const PublishFile: React.FC = () => {
     }
   };
 
+  const encryptCid = (cid: string, publicKey: string): string => {
+    return new NodeRSA(publicKey).encrypt(cid, 'base64');
+  };
+
+  const getCidHash = (cid: string): string => {
+    return new Hashes.SHA256().hex(cid);
+  };
+
   const createFile = async (newFileInfo: NewFileInfo) => {
-    console.log(newFileInfo);
     setPublishLoading(true);
     try {
       const result = await Api.eos.transact(
@@ -61,8 +82,14 @@ const PublishFile: React.FC = () => {
               ],
               data: {
                 owner: account.name,
-                ...newFileInfo,
+                encrypted_cid: encryptCid(
+                  newFileInfo.cid,
+                  contractRsaPublicKey,
+                ),
+                cid_hash: getCidHash(newFileInfo.cid),
+                description: newFileInfo.description,
                 size: fileSize,
+                price: newFileInfo.price,
               },
             },
           ],

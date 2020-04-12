@@ -1,0 +1,21 @@
+{
+  "name": "untitled-backend",
+  "version": "0.0.1",
+  "main": "src/run.ts",
+  "author": "yk",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/run.ts"
+  },
+  "dependencies": {
+    "demux": "^4.0.0",
+    "demux-eos": "^4.0.1",
+    "eosjs": "^20.0.3",
+    "node-fetch": "^2.6.0",
+    "node-rsa": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/node-rsa": "^1.0.0",
+    "typescript": "3.3.3"
+  }
+}

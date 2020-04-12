@@ -1,0 +1,8 @@
+{
+  "endpoint": "http://127.0.0.1:8888",
+  "contract": "yk",
+  "privateKeys": {
+    "owner": "5Kf12UAaWo9cdJc1aVsXpvGBo5oXxrhCsk7HTRXCmMXMLNLZqP2",
+    "active": "5Kf12UAaWo9cdJc1aVsXpvGBo5oXxrhCsk7HTRXCmMXMLNLZqP2"
+  }
+}
