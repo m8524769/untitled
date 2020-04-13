@@ -1,24 +1,21 @@
 #include <untitled.hpp>
 
 [[eosio::action]]
-void untitled::createfile(name owner, string encrypted_cid, string cid_hash, string description, uint64_t size, asset price) {
+void untitled::createfile(name owner, checksum256 cid_hash, string encrypted_cid, string description, uint64_t size, asset price) {
   require_auth( owner );
 
   files_table files(get_self(), get_self().value);
 
-  bool existing = false;
-  for (auto file_itr = files.begin(); file_itr != files.end() && existing != true; ++file_itr) {
-    if (file_itr->cid_hash == cid_hash) {
-      existing = true;
-    }
-  }
-  check(existing == false, "This file is already existing");
+  // Check if cid_hash is unique
+  auto files_by_cid_hash = files.get_index<"bycidhash"_n>();
+  auto file_itr = files_by_cid_hash.find(cid_hash);
+  check(file_itr == files_by_cid_hash.end(), "This file is already existing");
 
   files.emplace(owner, [&](auto &file) {
     file.id = files.available_primary_key();
     file.owner = owner;
-    file.encrypted_cid = encrypted_cid;
     file.cid_hash = cid_hash;
+    file.encrypted_cid = encrypted_cid;
     file.description = description;
     file.size = size;
     file.for_sale = true;
@@ -83,10 +80,26 @@ void untitled::cancelorder(uint64_t file_id) {
 }
 
 [[eosio::action]]
-void untitled::clearfiles(name account) {
+void untitled::updatecid(uint64_t file_id, string encrypted_cid) {
   require_auth( get_self() );
 
-  files_table files(get_self(), account.value);
+  check(encrypted_cid != "", "Encrypted CID is required");
+
+  files_table files(get_self(), get_self().value);
+
+  auto file_itr = files.find(file_id);
+  check(file_itr != files.end(), "File does not exist");
+
+  files.modify(file_itr, get_self(), [&](auto &file) {
+    file.encrypted_cid = encrypted_cid;
+  });
+}
+
+[[eosio::action]]
+void untitled::clearfiles() {
+  require_auth( get_self() );
+
+  files_table files(get_self(), get_self().value);
 
   auto file_itr = files.begin();
   while (file_itr != files.end()) {
@@ -95,10 +108,10 @@ void untitled::clearfiles(name account) {
 }
 
 [[eosio::action]]
-void untitled::clearorders(name account) {
+void untitled::clearorders() {
   require_auth( get_self() );
 
-  orders_table orders(get_self(), account.value);
+  orders_table orders(get_self(), get_self().value);
 
   auto order_itr = orders.begin();
   while (order_itr != orders.end()) {

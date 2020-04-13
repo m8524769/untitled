@@ -16,22 +16,12 @@
         {
             "name": "clearfiles",
             "base": "",
-            "fields": [
-                {
-                    "name": "account",
-                    "type": "name"
-                }
-            ]
+            "fields": []
         },
         {
             "name": "clearorders",
             "base": "",
-            "fields": [
-                {
-                    "name": "account",
-                    "type": "name"
-                }
-            ]
+            "fields": []
         },
         {
             "name": "createfile",
@@ -42,11 +32,11 @@
                     "type": "name"
                 },
                 {
-                    "name": "encrypted_cid",
-                    "type": "string"
+                    "name": "cid_hash",
+                    "type": "checksum256"
                 },
                 {
-                    "name": "cid_hash",
+                    "name": "encrypted_cid",
                     "type": "string"
                 },
                 {
@@ -76,11 +66,11 @@
                     "type": "name"
                 },
                 {
-                    "name": "encrypted_cid",
-                    "type": "string"
+                    "name": "cid_hash",
+                    "type": "checksum256"
                 },
                 {
-                    "name": "cid_hash",
+                    "name": "encrypted_cid",
                     "type": "string"
                 },
                 {
@@ -174,6 +164,20 @@
                     "type": "string"
                 }
             ]
+        },
+        {
+            "name": "updatecid",
+            "base": "",
+            "fields": [
+                {
+                    "name": "file_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "encrypted_cid",
+                    "type": "string"
+                }
+            ]
         }
     ],
     "actions": [
@@ -210,6 +214,11 @@
         {
             "name": "setkey",
             "type": "setkey",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "updatecid",
+            "type": "updatecid",
             "ricardian_contract": ""
         }
     ],

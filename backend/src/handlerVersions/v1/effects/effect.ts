@@ -36,6 +36,26 @@ const findRsaKeyByAccount = async (account: string) => {
   });
 };
 
+const updateEncryptedCid = async (fileId: number, encryptedCid: string) => {
+  return await Api.eos.transact({
+    actions: [{
+      account: eosConfig.contract,
+      name: 'updatecid',
+      authorization: [{
+        actor: eosConfig.contract,
+        permission: 'active',
+      }],
+      data: {
+        file_id: fileId,
+        encrypted_cid: encryptedCid,
+      },
+    }]
+  }, {
+    blocksBehind: 3,
+    expireSeconds: 30,
+  });
+};
+
 const run: StatelessActionCallback = async (payload: any, block: Block, context: any) => {
   console.log(payload, block);
   if (payload.data.to !== eosConfig.contract) {
@@ -68,8 +88,7 @@ const run: StatelessActionCallback = async (payload: any, block: Block, context:
   console.log(newEncryptedCid);
 
   // Update encrypted_cid
-  // const updateResult = await Api.eos.transact({
-  // });
+  await updateEncryptedCid(fileId, newEncryptedCid);
 };
 
 const effect: Effect = {

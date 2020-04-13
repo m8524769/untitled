@@ -82,11 +82,11 @@ const PublishFile: React.FC = () => {
               ],
               data: {
                 owner: account.name,
+                cid_hash: getCidHash(newFileInfo.cid),
                 encrypted_cid: encryptCid(
                   newFileInfo.cid,
                   contractRsaPublicKey,
                 ),
-                cid_hash: getCidHash(newFileInfo.cid),
                 description: newFileInfo.description,
                 size: fileSize,
                 price: newFileInfo.price,
