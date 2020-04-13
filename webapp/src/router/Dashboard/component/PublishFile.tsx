@@ -57,12 +57,12 @@ const PublishFile: React.FC = () => {
     }
   };
 
-  const encryptCid = (cid: string, publicKey: string): string => {
-    return new NodeRSA(publicKey).encrypt(cid, 'base64');
+  const encrypt = (string: string, publicKey: string): string => {
+    return new NodeRSA(publicKey).encrypt(string, 'base64');
   };
 
-  const getCidHash = (cid: string): string => {
-    return new Hashes.SHA256().hex(cid);
+  const sha256 = (string: string): string => {
+    return new Hashes.SHA256().hex(string);
   };
 
   const createFile = async (newFileInfo: NewFileInfo) => {
@@ -82,11 +82,8 @@ const PublishFile: React.FC = () => {
               ],
               data: {
                 owner: account.name,
-                cid_hash: getCidHash(newFileInfo.cid),
-                encrypted_cid: encryptCid(
-                  newFileInfo.cid,
-                  contractRsaPublicKey,
-                ),
+                cid_hash: sha256(newFileInfo.cid),
+                encrypted_cid: encrypt(newFileInfo.cid, contractRsaPublicKey),
                 description: newFileInfo.description,
                 size: fileSize,
                 price: newFileInfo.price,

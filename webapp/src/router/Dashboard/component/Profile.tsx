@@ -1,7 +1,6 @@
 import React from 'react';
-import { Tabs, Badge, Button, Space } from 'antd';
+import { Tabs, Badge, Space } from 'antd';
 import MyFiles from './MyFiles';
-import { KeyOutlined } from '@ant-design/icons';
 
 const Profile: React.FC = () => {
   return (
@@ -9,9 +8,9 @@ const Profile: React.FC = () => {
       defaultActiveKey="my-files"
       tabBarExtraContent={
         <Space>
-          <Button icon={<KeyOutlined />}>
+          {/* <Button icon={<KeyOutlined />}>
             Import RSA Key
-          </Button>
+          </Button> */}
         </Space>
       }
       style={{
