@@ -24,15 +24,18 @@ void untitled::createfile(name owner, checksum256 cid_hash, string encrypted_cid
 }
 
 [[eosio::action]]
-void untitled::sellfile(uint64_t id, asset price) {
+void untitled::sellfile(uint64_t file_id, string encrypted_cid, asset price) {
+  check(encrypted_cid != "", "Encrypted CID is required");
+
   files_table files(get_self(), get_self().value);
 
-  auto file_itr = files.find(id);
+  auto file_itr = files.find(file_id);
   check(file_itr != files.end(), "File does not exist");
 
   require_auth( file_itr->owner );
 
   files.modify(file_itr, file_itr->owner, [&](auto &file) {
+    file.encrypted_cid = encrypted_cid;
     file.for_sale = true;
     file.price = price;
   });
@@ -92,6 +95,20 @@ void untitled::updatecid(uint64_t file_id, string encrypted_cid) {
 
   files.modify(file_itr, get_self(), [&](auto &file) {
     file.encrypted_cid = encrypted_cid;
+  });
+}
+
+[[eosio::action]]
+void untitled::discontinue(uint64_t file_id) {
+  require_auth( get_self() );
+
+  files_table files(get_self(), get_self().value);
+
+  auto file_itr = files.find(file_id);
+  check(file_itr != files.end(), "File does not exist");
+
+  files.modify(file_itr, get_self(), [&](auto &file) {
+    file.for_sale = false;
   });
 }
 

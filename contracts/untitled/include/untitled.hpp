@@ -13,7 +13,7 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void createfile(name owner, checksum256 cid_hash, string encrypted_cid, string description, uint64_t size, asset price);
 
     [[eosio::action]]
-    void sellfile(uint64_t id, asset price);
+    void sellfile(uint64_t file_id, string encrypted_cid, asset price);
 
     [[eosio::action]]
     void placeorder(name buyer, uint64_t file_id);
@@ -23,6 +23,9 @@ class [[eosio::contract("untitled")]] untitled : public contract {
 
     [[eosio::action]]
     void updatecid(uint64_t file_id, string encrypted_cid);
+
+    [[eosio::action]]
+    void discontinue(uint64_t file_id);
 
     [[eosio::action]]
     void clearfiles();

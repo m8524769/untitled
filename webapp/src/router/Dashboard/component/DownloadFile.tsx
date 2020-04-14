@@ -5,9 +5,7 @@ import NodeRSA from 'node-rsa';
 interface DownloadFileProps {
   visible: boolean;
   encryptedCid: string;
-  cidHash: string;
-  onConfirm: () => void;
-  onCancel: () => void;
+  onClose: () => void;
 }
 
 const DownloadFile: React.FC<DownloadFileProps> = (
@@ -44,10 +42,10 @@ const DownloadFile: React.FC<DownloadFileProps> = (
             }
       }
       cancelText="Cancel"
-      onCancel={props.onCancel}
+      onCancel={props.onClose}
       onOk={() => {
         form.validateFields().then(() => {
-          props.onConfirm();
+          props.onClose();
         });
       }}
     >

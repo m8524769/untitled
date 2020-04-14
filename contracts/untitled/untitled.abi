@@ -54,6 +54,16 @@
             ]
         },
         {
+            "name": "discontinue",
+            "base": "",
+            "fields": [
+                {
+                    "name": "file_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
             "name": "file",
             "base": "",
             "fields": [
@@ -142,8 +152,12 @@
             "base": "",
             "fields": [
                 {
-                    "name": "id",
+                    "name": "file_id",
                     "type": "uint64"
+                },
+                {
+                    "name": "encrypted_cid",
+                    "type": "string"
                 },
                 {
                     "name": "price",
@@ -199,6 +213,11 @@
         {
             "name": "createfile",
             "type": "createfile",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "discontinue",
+            "type": "discontinue",
             "ricardian_contract": ""
         },
         {

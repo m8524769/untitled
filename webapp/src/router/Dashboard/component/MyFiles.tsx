@@ -5,15 +5,17 @@ import { RpcError } from 'eosjs';
 import Api from 'api';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import DownloadFile from './DownloadFile';
+import SellFile from './SellFile';
 
 const MyFiles: React.FC = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Download File Modal
+  // File Actions Modal
   const [downloadFileVisible, setDownloadFileVisible] = useState(false);
+  const [sellFileVisible, setSellFileVisible] = useState(false);
   const [encryptedCid, setEncryptedCid] = useState('');
-  const [cidHash, setCidHash] = useState('');
+  const [fileId, setFileId] = useState();
 
   const { account } = useContext(AuthContext);
 
@@ -60,61 +62,67 @@ const MyFiles: React.FC = () => {
   };
 
   return (
-    <List
-      loading={loading}
-      itemLayout="horizontal"
-      // loadMore={loadMore}
-      dataSource={files}
-      renderItem={(file) => (
-        <List.Item
-          actions={
-            file.for_sale === 1
-              ? [
-                  <Badge status="processing" text="On Sale" />,
-                  <a key="modify" onClick={() => {}}>
-                    Modify
-                  </a>,
-                ]
-              : [
-                  <a key="sell" onClick={() => {}}>
-                    Sell
-                  </a>,
-                  <a
-                    key="download"
-                    onClick={() => {
-                      setDownloadFileVisible(true);
-                      setEncryptedCid(file.encrypted_cid);
-                      setCidHash(file.cid_hash);
-                    }}
-                  >
-                    Download
-                  </a>,
-                ]
-          }
-        >
-          <Skeleton title={false} loading={file.loading} active>
+    <Skeleton active loading={loading} title={false} paragraph={{ rows: 10 }}>
+      <List
+        itemLayout="horizontal"
+        dataSource={files}
+        renderItem={(file) => (
+          <List.Item
+            actions={
+              file.for_sale === 1
+                ? [
+                    <Badge status="processing" text="On Sale" key="on-sale" />,
+                    <a key="modify" onClick={() => {}}>
+                      Modify
+                    </a>,
+                  ]
+                : [
+                    <a
+                      key="sell"
+                      onClick={() => {
+                        setSellFileVisible(true);
+                        setFileId(file.id);
+                        setEncryptedCid(file.encrypted_cid);
+                      }}
+                    >
+                      Sell
+                    </a>,
+                    <a
+                      key="download"
+                      onClick={() => {
+                        setDownloadFileVisible(true);
+                        setEncryptedCid(file.encrypted_cid);
+                      }}
+                    >
+                      Download
+                    </a>,
+                  ]
+            }
+          >
             <List.Item.Meta
               title={file.description}
               description={`CID Hash: ${file.cid_hash}`}
             />
             <div>Size: {formatBytes(file.size, 1)}</div>
-          </Skeleton>
-        </List.Item>
-      )}
-      footer={
-        <DownloadFile
-          visible={downloadFileVisible}
-          encryptedCid={encryptedCid}
-          cidHash={cidHash}
-          onConfirm={() => {
-            setDownloadFileVisible(false);
-          }}
-          onCancel={() => {
-            setDownloadFileVisible(false);
-          }}
-        />
-      }
-    />
+          </List.Item>
+        )}
+      />
+      <DownloadFile
+        visible={downloadFileVisible}
+        encryptedCid={encryptedCid}
+        onClose={() => {
+          setDownloadFileVisible(false);
+        }}
+      />
+      <SellFile
+        visible={sellFileVisible}
+        fileId={fileId}
+        encryptedCid={encryptedCid}
+        onClose={() => {
+          setSellFileVisible(false);
+        }}
+      />
+    </Skeleton>
   );
 };
 
