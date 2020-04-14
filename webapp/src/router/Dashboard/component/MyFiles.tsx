@@ -10,7 +10,6 @@ import {
 } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
-import Api from 'api';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import DownloadFile from './DownloadFile';
 import SellFile from './SellFile';
@@ -26,7 +25,7 @@ const MyFiles: React.FC = () => {
   const [encryptedCid, setEncryptedCid] = useState('');
   const [fileId, setFileId] = useState();
 
-  const { account } = useContext(AuthContext);
+  const { eosRpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -40,7 +39,7 @@ const MyFiles: React.FC = () => {
   const getFiles = async (account: string) => {
     setLoading(true);
     try {
-      const result = await Api.eos.rpc.get_table_rows({
+      const result = await eosRpc.get_table_rows({
         json: true,
         code: CONTRACT_ACCOUNT,
         scope: CONTRACT_ACCOUNT,
@@ -56,6 +55,8 @@ const MyFiles: React.FC = () => {
     } catch (e) {
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
+      } else {
+        message.error(e);
       }
     }
     setLoading(false);

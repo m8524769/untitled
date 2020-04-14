@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Form, Input, Button, Modal, message, PageHeader, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { CONTRACT_ACCOUNT, TOKEN_SYMBOL } from 'constants/eos';
-import Api from 'api';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import IPFS from 'ipfs';
@@ -23,12 +22,17 @@ const PublishFile: React.FC = () => {
 
   const [form] = Form.useForm();
 
-  const { account } = useContext(AuthContext);
+  const { eos, eosRpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     initIpfsNode();
-    getContractRsaPublicKey();
   }, []);
+
+  useEffect(() => {
+    if (eosRpc) {
+      getContractRsaPublicKey();
+    }
+  }, [eosRpc]);
 
   const initIpfsNode = async () => {
     const node = await IPFS.create({
@@ -38,7 +42,7 @@ const PublishFile: React.FC = () => {
   };
 
   const getContractRsaPublicKey = async () => {
-    const result = await Api.eos.rpc.get_table_rows({
+    const result = await eosRpc.get_table_rows({
       json: true,
       code: CONTRACT_ACCOUNT,
       scope: CONTRACT_ACCOUNT,
@@ -70,7 +74,7 @@ const PublishFile: React.FC = () => {
   const createFile = async (newFileInfo: NewFileInfo) => {
     setPublishLoading(true);
     try {
-      const result = await Api.eos.transact(
+      const result = await eos.transact(
         {
           actions: [
             {
@@ -103,6 +107,8 @@ const PublishFile: React.FC = () => {
     } catch (e) {
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
+      } else {
+        message.error(e);
       }
     }
     setPublishLoading(false);

@@ -7,13 +7,13 @@ import Dashboard from './Dashboard/Dashboard';
 
 const router = (
   <Switch>
-    {/* 首页 */}
+    {/* Home */}
     <Route exact path="/" component={Home} />
 
-    {/* 仪表盘 */}
+    {/* Dashboard */}
     <Route exact path="/dashboard" component={Dashboard} />
 
-    {/* 匹配失败 */}
+    {/* No Match */}
     <Route component={NoMatch} />
   </Switch>
 );
@@ -23,10 +23,10 @@ function NoMatch() {
     <Result
       status="404"
       title="404"
-      subTitle="页面不存在"
+      subTitle="Not Found"
       extra={
         <Link to="/">
-          <Button type="primary">回到首页</Button>
+          <Button type="primary">Go back Home</Button>
         </Link>
       }
     />

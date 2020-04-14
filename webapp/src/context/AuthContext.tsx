@@ -18,6 +18,7 @@ const rpc = new JsonRpc(network.fullhost());
 
 interface AuthContextType {
   eos: Api;
+  eosRpc: JsonRpc;
   account: any;
   login: () => void;
   signout: () => void;
@@ -25,6 +26,7 @@ interface AuthContextType {
 
 export const AuthContext = React.createContext({
   eos: null,
+  eosRpc: null,
   account: null,
   login: () => {},
   signout: () => {},
@@ -32,10 +34,12 @@ export const AuthContext = React.createContext({
 
 export const AuthProvider = ({ children }) => {
   const [eos, setEos] = useState(null);
+  const [eosRpc, setEosRpc] = useState(null);
   const [account, setAccount] = useState({});
 
   useEffect(() => {
     login();
+    setEosRpc(rpc);
   }, []);
 
   // Debug
@@ -71,7 +75,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ eos, account, login, signout }}>
+    <AuthContext.Provider value={{ eos, eosRpc, account, login, signout }}>
       {children}
     </AuthContext.Provider>
   );

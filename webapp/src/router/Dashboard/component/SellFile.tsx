@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Form, Input, message } from 'antd';
 import NodeRSA from 'node-rsa';
-import Api from 'api';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
@@ -27,14 +26,14 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
 
   const [form] = Form.useForm();
 
-  const { account } = useContext(AuthContext);
+  const { eos, eosRpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     getContractRsaPublicKey();
   }, []);
 
   const getContractRsaPublicKey = async () => {
-    const result = await Api.eos.rpc.get_table_rows({
+    const result = await eosRpc.get_table_rows({
       json: true,
       code: CONTRACT_ACCOUNT,
       scope: CONTRACT_ACCOUNT,
@@ -60,7 +59,7 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
   const sellFile = async (salesInfo: SalesInfo) => {
     setSellLoading(true);
     try {
-      const result = await Api.eos.transact(
+      const result = await eos.transact(
         {
           actions: [
             {

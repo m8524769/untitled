@@ -3,7 +3,6 @@ import { Button, PageHeader, Space, message, Statistic } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import useInterval from '@use-it/interval';
-import Api from 'api';
 import { TOKEN_SYMBOL } from 'constants/eos';
 import TokenTransfer, { TransferInfo } from './TokenTransfer';
 import { RpcError } from 'eosjs';
@@ -20,7 +19,7 @@ const MyWallet: React.FC = () => {
   const [tonkenTransferVisible, setTokenTransferVisible] = useState(false);
   const [transferLoading, setTransferLoading] = useState(false);
 
-  const { account } = useContext(AuthContext);
+  const { eos, eosRpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -61,7 +60,7 @@ const MyWallet: React.FC = () => {
     setLoading(true);
     setBalance('--');
     try {
-      await Api.eos.rpc
+      await eosRpc
         .get_currency_balance('eosio.token', account, symbol)
         .then((balance) => {
           setBalance(balance[0]);
@@ -82,7 +81,7 @@ const MyWallet: React.FC = () => {
     console.log(transferInfo);
     setTransferLoading(true);
     try {
-      const result = await Api.eos.transact(
+      const result = await eos.transact(
         {
           actions: [
             {

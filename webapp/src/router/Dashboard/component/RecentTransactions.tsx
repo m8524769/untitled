@@ -12,7 +12,6 @@ import {
   message,
 } from 'antd';
 import { SyncOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
-import Api from 'api';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
@@ -44,7 +43,7 @@ const RecentTransactions: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const { account } = useContext(AuthContext);
+  const { eosRpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -58,7 +57,7 @@ const RecentTransactions: React.FC = () => {
   const getTransactions = async (account: string) => {
     setLoading(true);
     try {
-      const result = await Api.eos.rpc.history_get_actions(account);
+      const result = await eosRpc.history_get_actions(account);
       console.log(result);
       setLastIrreversibleBlock(result.last_irreversible_block);
       setTransactions(
