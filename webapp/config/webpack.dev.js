@@ -13,12 +13,6 @@ module.exports = merge(webpackCommonConfig, {
     disableHostCheck: true,
     host: process.env.HOST || '0.0.0.0',
     port: parseInt(process.env.PORT, 10) || 4200,
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:3000',
-        // pathRewrite: { '^/api': '' }
-      },
-    },
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

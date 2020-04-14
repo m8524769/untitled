@@ -60,15 +60,22 @@ const MyWallet: React.FC = () => {
   const getBalance = async (account: string, symbol: string) => {
     setLoading(true);
     setBalance('--');
-    await Api.eos.rpc
-      .get_currency_balance('eosio.token', account, symbol)
-      .then((balance) => {
-        setBalance(balance[0]);
-        setLoading(false);
-        setUpdateTime(0);
-        setUpdateTimeFormat('Updated just now');
-      })
-      .catch((error) => message.error(error));
+    try {
+      await Api.eos.rpc
+        .get_currency_balance('eosio.token', account, symbol)
+        .then((balance) => {
+          setBalance(balance[0]);
+          setLoading(false);
+          setUpdateTime(0);
+          setUpdateTimeFormat('Updated just now');
+        });
+    } catch (e) {
+      if (e instanceof RpcError) {
+        message.error(JSON.stringify(e.json, null, 2));
+      } else {
+        message.error(e);
+      }
+    }
   };
 
   const transfer = async (transferInfo: TransferInfo) => {

@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
       <div
         style={{
           gridColumn: '3 / 4',
-          gridRow: '1 / 5',
+          gridRow: '1 / 4',
         }}
       >
         <IpfsUpload></IpfsUpload>
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
       <div
         style={{
           gridColumn: '1 / 3',
-          gridRow: '2 / 5',
+          gridRow: '2 / 4',
         }}
       >
         <Profile></Profile>

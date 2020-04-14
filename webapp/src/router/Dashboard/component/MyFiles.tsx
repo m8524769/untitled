@@ -141,7 +141,6 @@ const MyFiles: React.FC = () => {
         fileId={fileId}
         encryptedCid={encryptedCid}
         onClose={() => {
-          getFiles(account.name);
           setSellFileVisible(false);
         }}
       />
