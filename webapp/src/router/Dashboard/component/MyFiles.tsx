@@ -1,11 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Skeleton, List, message, Badge } from 'antd';
+import {
+  Skeleton,
+  List,
+  message,
+  Badge,
+  Button,
+  Space,
+  Pagination,
+} from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import Api from 'api';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import DownloadFile from './DownloadFile';
 import SellFile from './SellFile';
+import { SyncOutlined } from '@ant-design/icons';
 
 const MyFiles: React.FC = () => {
   const [files, setFiles] = useState([]);
@@ -78,7 +87,7 @@ const MyFiles: React.FC = () => {
                   ]
                 : [
                     <a
-                      key="sell"
+                      key="sell-file"
                       onClick={() => {
                         setSellFileVisible(true);
                         setFileId(file.id);
@@ -88,7 +97,7 @@ const MyFiles: React.FC = () => {
                       Sell
                     </a>,
                     <a
-                      key="download"
+                      key="download-file"
                       onClick={() => {
                         setDownloadFileVisible(true);
                         setEncryptedCid(file.encrypted_cid);
@@ -106,6 +115,19 @@ const MyFiles: React.FC = () => {
             <div>Size: {formatBytes(file.size, 1)}</div>
           </List.Item>
         )}
+        footer={
+          <Space>
+            <Button
+              icon={<SyncOutlined />}
+              loading={loading}
+              key="refresh"
+              onClick={() => getFiles(account.name)}
+            >
+              Refresh
+            </Button>
+            <Pagination defaultCurrent={1} total={20} />
+          </Space>
+        }
       />
       <DownloadFile
         visible={downloadFileVisible}
@@ -119,6 +141,7 @@ const MyFiles: React.FC = () => {
         fileId={fileId}
         encryptedCid={encryptedCid}
         onClose={() => {
+          getFiles(account.name);
           setSellFileVisible(false);
         }}
       />

@@ -8,7 +8,8 @@ import { RpcError } from 'eosjs';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 interface SalesInfo {
-  cid: string;
+  fileId: number;
+  encryptedCid: string;
   price: string;
 }
 
@@ -72,8 +73,8 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
                 },
               ],
               data: {
-                file_id: props.fileId,
-                encrypted_cid: encrypt(salesInfo.cid, contractRsaPublicKey),
+                file_id: salesInfo.fileId,
+                encrypted_cid: salesInfo.encryptedCid,
                 price: salesInfo.price,
               },
             },
@@ -104,7 +105,8 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
       okText: 'Confirm',
       onOk() {
         sellFile({
-          cid: cid,
+          fileId: props.fileId,
+          encryptedCid: encrypt(cid, contractRsaPublicKey),
           price: values.price,
         } as SalesInfo).then(() => {
           props.onClose();
@@ -117,17 +119,12 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
     <Modal
       visible={props.visible}
       title="Sell File"
-      width={600}
+      width={540}
       okText="Sell"
-      okButtonProps={
-        cid !== ''
-          ? {
-              loading: sellLoading,
-            }
-          : {
-              disabled: true,
-            }
-      }
+      okButtonProps={{
+        loading: sellLoading,
+        disabled: cid === '',
+      }}
       cancelText="Cancel"
       onCancel={props.onClose}
       onOk={() => {
@@ -143,6 +140,9 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
           <Input.TextArea
             placeholder="Please paste your RSA private key here..."
             rows={9}
+            style={{
+              fontFamily: 'monospace',
+            }}
           />
         </Form.Item>
 

@@ -31,7 +31,9 @@ const PublishFile: React.FC = () => {
   }, []);
 
   const initIpfsNode = async () => {
-    const node = await IPFS.create();
+    const node = await IPFS.create({
+      repo: String(Math.random() + Date.now()),
+    });
     setIpfs(node);
   };
 
@@ -108,7 +110,7 @@ const PublishFile: React.FC = () => {
 
   const onFinish = (values) => {
     Modal.confirm({
-      title: 'Are you sure?',
+      title: 'Are you sure to publish it?',
       icon: <ExclamationCircleOutlined />,
       cancelText: 'Not now',
       okText: 'Confirm',

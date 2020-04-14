@@ -1,18 +1,10 @@
 import React from 'react';
-import { Tabs, Badge, Space } from 'antd';
+import { Tabs, Badge } from 'antd';
 import MyFiles from './MyFiles';
 
 const Profile: React.FC = () => {
   return (
     <Tabs
-      defaultActiveKey="my-files"
-      tabBarExtraContent={
-        <Space>
-          {/* <Button icon={<KeyOutlined />}>
-            Import RSA Key
-          </Button> */}
-        </Space>
-      }
       style={{
         padding: '16px 24px',
       }}

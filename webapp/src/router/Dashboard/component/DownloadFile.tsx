@@ -28,19 +28,14 @@ const DownloadFile: React.FC<DownloadFileProps> = (
     <Modal
       visible={props.visible}
       title="Download File"
-      width={600}
+      width={540}
       okText="Download"
-      okButtonProps={
-        cid !== ''
-          ? {
-              href: `https://ipfs.io/ipfs/${cid}`,
-              target: '_blank',
-              style: { marginLeft: '8px' },
-            }
-          : {
-              disabled: true,
-            }
-      }
+      okButtonProps={{
+        href: `https://ipfs.io/ipfs/${cid}`,
+        target: '_blank',
+        style: { marginLeft: '8px' },
+        disabled: cid === '',
+      }}
       cancelText="Cancel"
       onCancel={props.onClose}
       onOk={() => {
@@ -58,6 +53,9 @@ const DownloadFile: React.FC<DownloadFileProps> = (
           <Input.TextArea
             placeholder="Please paste your RSA private key here..."
             rows={9}
+            style={{
+              fontFamily: 'monospace',
+            }}
           />
         </Form.Item>
       </Form>
