@@ -26,14 +26,14 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
 
   const [form] = Form.useForm();
 
-  const { eos, eosRpc, account } = useContext(AuthContext);
+  const { eos, rpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     getContractRsaPublicKey();
   }, []);
 
   const getContractRsaPublicKey = async () => {
-    const result = await eosRpc.get_table_rows({
+    const result = await rpc.get_table_rows({
       json: true,
       code: CONTRACT_ACCOUNT,
       scope: CONTRACT_ACCOUNT,

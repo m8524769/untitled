@@ -19,7 +19,7 @@ const MyWallet: React.FC = () => {
   const [tonkenTransferVisible, setTokenTransferVisible] = useState(false);
   const [transferLoading, setTransferLoading] = useState(false);
 
-  const { eos, eosRpc, account } = useContext(AuthContext);
+  const { eos, rpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -60,7 +60,7 @@ const MyWallet: React.FC = () => {
     setLoading(true);
     setBalance('--');
     try {
-      await eosRpc
+      await rpc
         .get_currency_balance('eosio.token', account, symbol)
         .then((balance) => {
           setBalance(balance[0]);

@@ -43,7 +43,7 @@ const RecentTransactions: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const { eosRpc, account } = useContext(AuthContext);
+  const { rpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -57,7 +57,7 @@ const RecentTransactions: React.FC = () => {
   const getTransactions = async (account: string) => {
     setLoading(true);
     try {
-      const result = await eosRpc.history_get_actions(account);
+      const result = await rpc.history_get_actions(account);
       console.log(result);
       setLastIrreversibleBlock(result.last_irreversible_block);
       setTransactions(

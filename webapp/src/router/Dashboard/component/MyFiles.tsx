@@ -25,7 +25,7 @@ const MyFiles: React.FC = () => {
   const [encryptedCid, setEncryptedCid] = useState('');
   const [fileId, setFileId] = useState();
 
-  const { eosRpc, account } = useContext(AuthContext);
+  const { rpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -39,7 +39,7 @@ const MyFiles: React.FC = () => {
   const getFiles = async (account: string) => {
     setLoading(true);
     try {
-      const result = await eosRpc.get_table_rows({
+      const result = await rpc.get_table_rows({
         json: true,
         code: CONTRACT_ACCOUNT,
         scope: CONTRACT_ACCOUNT,
