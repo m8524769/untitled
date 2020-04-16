@@ -1,8 +1,21 @@
 import React, { useContext } from 'react';
-import { Layout, Menu, Dropdown, Row, Col, Button } from 'antd';
+import {
+  Layout,
+  Menu,
+  Dropdown,
+  Row,
+  Col,
+  Button,
+  message,
+  notification,
+  Typography,
+} from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import { AuthContext } from 'context/AuthContext';
 import { ExportOutlined, KeyOutlined } from '@ant-design/icons';
+import { CONTRACT_ACCOUNT } from 'constants/eos';
+import { RpcError } from 'eosjs';
+import NodeRSA from 'node-rsa';
 
 const navLinks = [
   {
@@ -16,7 +29,59 @@ const navLinks = [
 ];
 
 const BasicLayout: React.FC = (props: any) => {
-  const { account, login, signout } = useContext(AuthContext);
+  const { eos, account, login, signout } = useContext(AuthContext);
+
+  const onSetKeyClick = () => {
+    const key = new NodeRSA({ b: 512 });
+    setKey(key.exportKey('public')).then(() => {
+      notification.open({
+        message: 'Please save your RSA private key',
+        description: (
+          <Typography.Text code copyable>
+            {key.exportKey('private')}
+          </Typography.Text>
+        ),
+        duration: null,
+      });
+    });
+  };
+
+  const setKey = async (rsaPublicKey: string) => {
+    try {
+      const result = await eos.transact(
+        {
+          actions: [
+            {
+              account: CONTRACT_ACCOUNT,
+              name: 'setkey',
+              authorization: [
+                {
+                  actor: account.name,
+                  permission: account.authority,
+                },
+              ],
+              data: {
+                account: account.name,
+                rsa_public_key: rsaPublicKey,
+              },
+            },
+          ],
+        },
+        {
+          blocksBehind: 3,
+          expireSeconds: 30,
+        },
+      );
+      message.success(`Transaction id: ${result.transaction_id}`, 4);
+      message.success('Your RSA public key is setting successfully!');
+    } catch (e) {
+      if (e instanceof RpcError) {
+        message.error(JSON.stringify(e.json, null, 2));
+      } else {
+        message.error(e);
+      }
+    }
+  };
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -47,7 +112,7 @@ const BasicLayout: React.FC = (props: any) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item>
+                    <Menu.Item onClick={onSetKeyClick}>
                       <KeyOutlined />
                       Set RSA keypair
                     </Menu.Item>
