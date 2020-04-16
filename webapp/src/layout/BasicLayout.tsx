@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Layout, Menu, Dropdown, Row, Col, Button } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import { AuthContext } from 'context/AuthContext';
-import { ExportOutlined } from '@ant-design/icons';
+import { ExportOutlined, KeyOutlined } from '@ant-design/icons';
 
 const navLinks = [
   {
@@ -47,6 +47,11 @@ const BasicLayout: React.FC = (props: any) => {
               <Dropdown
                 overlay={
                   <Menu>
+                    <Menu.Item>
+                      <KeyOutlined />
+                      Set RSA keypair
+                    </Menu.Item>
+
                     <Menu.Item onClick={signout}>
                       <ExportOutlined />
                       Sign out
