@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Skeleton, List, message, Button } from 'antd';
+import { Skeleton, List, message, Button, Modal } from 'antd';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
-import { SyncOutlined } from '@ant-design/icons';
+import { SyncOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 interface UnpaidOrdersProps {
   setTotal: (total: number) => void;
@@ -15,7 +15,7 @@ const UnpaidOrders: React.FC<UnpaidOrdersProps> = (
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { rpc, account } = useContext(AuthContext);
+  const { eos, rpc, account } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -56,6 +56,42 @@ const UnpaidOrders: React.FC<UnpaidOrdersProps> = (
     setLoading(false);
   };
 
+  const cancelOrder = async (fileId: number) => {
+    try {
+      const result = await eos.transact(
+        {
+          actions: [
+            {
+              account: CONTRACT_ACCOUNT,
+              name: 'cancelorder',
+              authorization: [
+                {
+                  actor: account.name,
+                  permission: account.authority,
+                },
+              ],
+              data: {
+                file_id: fileId,
+              },
+            },
+          ],
+        },
+        {
+          blocksBehind: 3,
+          expireSeconds: 30,
+        },
+      );
+      message.success(`Transaction id: ${result.transaction_id}`, 4);
+      message.success('Order Canceled');
+    } catch (e) {
+      if (e instanceof RpcError) {
+        message.error(JSON.stringify(e.json, null, 2));
+      } else {
+        message.error(e);
+      }
+    }
+  };
+
   return (
     <Skeleton active loading={loading} title={false} paragraph={{ rows: 10 }}>
       <List
@@ -64,7 +100,20 @@ const UnpaidOrders: React.FC<UnpaidOrdersProps> = (
         renderItem={(order) => (
           <List.Item
             actions={[
-              <a key="cancel-order" onClick={() => {}}>
+              <a
+                key="cancel-order"
+                onClick={() => {
+                  Modal.confirm({
+                    title: 'Are you sure cancel this order?',
+                    icon: <ExclamationCircleOutlined />,
+                    cancelText: 'Not sure',
+                    okText: 'Confirm',
+                    onOk() {
+                      cancelOrder(order.file_id);
+                    },
+                  });
+                }}
+              >
                 Cancel Order
               </a>,
             ]}
