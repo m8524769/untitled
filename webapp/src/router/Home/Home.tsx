@@ -7,7 +7,7 @@ const Home: React.FC = () => {
     <Row justify="center" gutter={{ xs: 8, sm: 16, md: 24 }}>
       {/* <Col span={6}></Col> */}
 
-      <Col span={14}>
+      <Col span={14} style={{ minWidth: '700px' }}>
         <FileStore></FileStore>
       </Col>
 

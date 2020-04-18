@@ -1,8 +1,11 @@
-import React from 'react';
-import { Tabs, Badge } from 'antd';
+import React, { useState } from 'react';
+import { Tabs } from 'antd';
 import MyFiles from './MyFiles';
+import UnpaidOrders from './UnpaidOrders';
 
 const Profile: React.FC = () => {
+  const [unpaidOrdersTotal, setUnpaidOrdersTotal] = useState(0);
+
   return (
     <Tabs
       style={{
@@ -16,13 +19,11 @@ const Profile: React.FC = () => {
       <Tabs.TabPane tab="Wish List" key="wish-list"></Tabs.TabPane>
 
       <Tabs.TabPane
-        tab={
-          <Badge dot={true} offset={[3, 0]}>
-            Unpaid Orders
-          </Badge>
-        }
+        tab={`Unpaid Orders (${unpaidOrdersTotal})`}
         key="unpaid-orders"
-      ></Tabs.TabPane>
+      >
+        <UnpaidOrders setTotal={setUnpaidOrdersTotal}></UnpaidOrders>
+      </Tabs.TabPane>
     </Tabs>
   );
 };
