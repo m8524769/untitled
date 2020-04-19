@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }) => {
     rpc: rpc,
   });
 
+  // Only in Development
   useEffect(() => login('scatter'), []);
 
   const login = (wallet: WalletType) => {

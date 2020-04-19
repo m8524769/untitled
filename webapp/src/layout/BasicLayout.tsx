@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Layout,
   Menu,
@@ -39,6 +39,17 @@ const BasicLayout: React.FC = (props: any) => {
   const [defaultWallet, setDefaultWallet] = useState<WalletType>('scatter');
 
   const { account, login, signout, transact } = useContext(AuthContext);
+
+  useEffect(() => {
+    const wallet = localStorage.getItem('defaultWallet');
+    if (wallet) {
+      setDefaultWallet(wallet as WalletType);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('defaultWallet', defaultWallet);
+  }, [defaultWallet]);
 
   const onSetKeyClick = () => {
     const key = new NodeRSA({ b: 512 });

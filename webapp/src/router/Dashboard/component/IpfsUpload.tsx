@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Typography, PageHeader, Upload } from 'antd';
+import { Typography, PageHeader, Upload, Tag } from 'antd';
 import { InboxOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { IpfsContext } from 'context/IpfsContext';
 
@@ -7,7 +7,7 @@ const IpfsUpload: React.FC = () => {
   const [cid, setCid] = useState('');
   const [fileList, setFileList] = useState([]);
 
-  const { ipfs, isIpfsReady } = useContext(IpfsContext);
+  const { ipfs, isIpfsReady, ipfsInitError } = useContext(IpfsContext);
 
   const upload = async (file: any) => {
     for await (const { cid } of ipfs.add(file)) {
@@ -16,7 +16,17 @@ const IpfsUpload: React.FC = () => {
   };
 
   return (
-    <PageHeader title="IPFS Upload">
+    <PageHeader
+      title="IPFS Upload"
+      tags={[
+        isIpfsReady ? (
+          <Tag color="success">Available</Tag>
+        ) : (
+          <Tag color="processing">Launching IPFS node...</Tag>
+        ),
+        ipfsInitError && <Tag color="error">IPFS Init Error</Tag>,
+      ]}
+    >
       <Upload.Dragger
         fileList={fileList}
         customRequest={(options) => {
