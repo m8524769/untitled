@@ -33,7 +33,7 @@ interface AuthContextType {
   account: Account;
   login: (wallet: WalletType) => void;
   signout: () => void;
-  transact: (action: Action) => Promise<any>;
+  transact: (action: Action) => Promise<string>;
 }
 
 export const AuthContext = React.createContext({} as AuthContextType);
@@ -111,21 +111,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const transact = async (action: Action) => {
+  const transact = async (action: Action): Promise<string> => {
     switch (wallet) {
       case 'scatter':
-        return await eos.transact(
-          {
-            actions: [action],
-          },
-          {
-            blocksBehind: 3,
-            expireSeconds: 30,
-          },
-        );
+        return await eos
+          .transact(
+            {
+              actions: [action],
+            },
+            {
+              blocksBehind: 3,
+              expireSeconds: 30,
+            },
+          )
+          .then((result) => result.transaction_id);
 
       case 'anchor':
-        return await link.transact({ action });
+        return await link
+          .transact({ action, broadcast: true })
+          .then((result) => result.processed.id);
     }
   };
 

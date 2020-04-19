@@ -27,7 +27,7 @@ const columns = [
     dataIndex: ['action_trace', 'act'],
     render: (text) => (
       <Tag color={text.account === CONTRACT_ACCOUNT ? 'geekblue' : 'purple'}>
-        {`${text.account}::${text.name}`}
+        {text.account}::{text.name}
       </Tag>
     ),
   },
@@ -120,6 +120,7 @@ const RecentTransactions: React.FC = () => {
         <Table
           columns={columns}
           dataSource={transactions}
+          rowKey={(record) => record.action_trace.trx_id}
           showHeader={false}
           size="small"
           scroll={{
@@ -172,7 +173,7 @@ const RecentTransactions: React.FC = () => {
                       <Descriptions.Item label="Authorization">
                         {record.action_trace.act.authorization.map(
                           (authorization) => (
-                            <Tag color="green" key="authorization.actor">
+                            <Tag color="green" key={authorization.actor}>
                               {`${authorization.actor}@${authorization.permission}`}
                             </Tag>
                           ),
@@ -187,7 +188,8 @@ const RecentTransactions: React.FC = () => {
                               : 'purple'
                           }
                         >
-                          {`${record.action_trace.act.account}::${record.action_trace.act.name}`}
+                          {record.action_trace.act.account}::
+                          {record.action_trace.act.name}
                         </Tag>
                       </Descriptions.Item>
 

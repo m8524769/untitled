@@ -20,11 +20,18 @@ const IpfsUpload: React.FC = () => {
       title="IPFS Upload"
       tags={[
         isIpfsReady ? (
-          <Tag color="success">Available</Tag>
+          <Tag color="success" key="ipfs-ready">
+            Available
+          </Tag>
+        ) : ipfsInitError ? (
+          <Tag color="error" key="ipfs-error">
+            IPFS Init Error
+          </Tag>
         ) : (
-          <Tag color="processing">Launching IPFS node...</Tag>
+          <Tag color="processing" key="ipfs-launching">
+            Launching IPFS node...
+          </Tag>
         ),
-        ipfsInitError && <Tag color="error">IPFS Init Error</Tag>,
       ]}
     >
       <Upload.Dragger

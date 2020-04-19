@@ -13,7 +13,12 @@ import {
 } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
 import { AuthContext, WalletType } from 'context/AuthContext';
-import { ExportOutlined, KeyOutlined } from '@ant-design/icons';
+import {
+  ExportOutlined,
+  KeyOutlined,
+  DashboardOutlined,
+  HomeOutlined,
+} from '@ant-design/icons';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import { RpcError } from 'eosjs';
 import NodeRSA from 'node-rsa';
@@ -22,10 +27,12 @@ const navLinks = [
   {
     path: '/',
     label: 'Home',
+    icon: <HomeOutlined />,
   },
   {
     path: '/dashboard',
     label: 'Dashboard',
+    icon: <DashboardOutlined />,
   },
 ];
 
@@ -104,7 +111,10 @@ const BasicLayout: React.FC = (props: any) => {
             >
               {navLinks.map((navLink) => (
                 <Menu.Item key={navLink.path}>
-                  <NavLink to={navLink.path}>{navLink.label}</NavLink>
+                  <NavLink to={navLink.path}>
+                    {navLink.icon}
+                    {navLink.label}
+                  </NavLink>
                 </Menu.Item>
               ))}
             </Menu>
