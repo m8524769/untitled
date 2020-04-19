@@ -4,9 +4,9 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { CONTRACT_ACCOUNT, TOKEN_SYMBOL } from 'constants/eos';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
-import IPFS from 'ipfs';
 import NodeRSA from 'node-rsa';
 import Hashes from 'jshashes';
+import { IpfsContext } from 'context/IpfsContext';
 
 interface NewFileInfo {
   cid: string;
@@ -15,26 +15,18 @@ interface NewFileInfo {
 }
 
 const PublishFile: React.FC = () => {
-  const [ipfs, setIpfs] = useState(null);
   const [contractRsaPublicKey, setContractRsaPublicKey] = useState('');
   const [fileSize, setFileSize] = useState(0);
   const [publishLoading, setPublishLoading] = useState(false);
 
   const [form] = Form.useForm();
 
-  const { eos, rpc, account } = useContext(AuthContext);
+  const { rpc, account, transact } = useContext(AuthContext);
+  const { ipfs, isIpfsReady } = useContext(IpfsContext);
 
   useEffect(() => {
-    initIpfsNode();
     getContractRsaPublicKey();
   }, []);
-
-  const initIpfsNode = async () => {
-    const node = await IPFS.create({
-      repo: String(Math.random() + Date.now()),
-    });
-    setIpfs(node);
-  };
 
   const getContractRsaPublicKey = async () => {
     const result = await rpc.get_table_rows({
@@ -49,7 +41,7 @@ const PublishFile: React.FC = () => {
 
   const cidValidator = async (rule, value) => {
     try {
-      for await (const file of ipfs.files.ls(`/ipfs/${value}`)) {
+      for await (const file of ipfs.ls(value)) {
         setFileSize(file.size);
       }
     } catch (e) {
@@ -69,35 +61,24 @@ const PublishFile: React.FC = () => {
   const createFile = async (newFileInfo: NewFileInfo) => {
     setPublishLoading(true);
     try {
-      const result = await eos.transact(
-        {
-          actions: [
-            {
-              account: CONTRACT_ACCOUNT,
-              name: 'createfile',
-              authorization: [
-                {
-                  actor: account.name,
-                  permission: account.authority,
-                },
-              ],
-              data: {
-                owner: account.name,
-                cid_hash: sha256(newFileInfo.cid),
-                encrypted_cid: encrypt(newFileInfo.cid, contractRsaPublicKey),
-                description: newFileInfo.description,
-                size: fileSize,
-                price: newFileInfo.price,
-              },
-            },
-          ],
+      await transact({
+        account: CONTRACT_ACCOUNT,
+        name: 'createfile',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          owner: account.name,
+          cid_hash: sha256(newFileInfo.cid),
+          encrypted_cid: encrypt(newFileInfo.cid, contractRsaPublicKey),
+          description: newFileInfo.description,
+          size: fileSize,
+          price: newFileInfo.price,
         },
-        {
-          blocksBehind: 3,
-          expireSeconds: 30,
-        },
-      );
-      message.success(`Transaction id: ${result.transaction_id}`, 4);
+      });
       message.success('Publish Successfully!');
     } catch (e) {
       if (e instanceof RpcError) {
@@ -148,7 +129,7 @@ const PublishFile: React.FC = () => {
         >
           <Input.Password
             placeholder="Content identifier on IPFS"
-            disabled={!ipfs}
+            disabled={!isIpfsReady}
           />
         </Form.Item>
 

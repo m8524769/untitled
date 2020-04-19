@@ -29,7 +29,7 @@ const navLinks = [
 ];
 
 const BasicLayout: React.FC = (props: any) => {
-  const { eos, account, login, signout } = useContext(AuthContext);
+  const { account, login, signout, transact } = useContext(AuthContext);
 
   const onSetKeyClick = () => {
     const key = new NodeRSA({ b: 512 });
@@ -48,31 +48,20 @@ const BasicLayout: React.FC = (props: any) => {
 
   const setKey = async (rsaPublicKey: string) => {
     try {
-      const result = await eos.transact(
-        {
-          actions: [
-            {
-              account: CONTRACT_ACCOUNT,
-              name: 'setkey',
-              authorization: [
-                {
-                  actor: account.name,
-                  permission: account.authority,
-                },
-              ],
-              data: {
-                account: account.name,
-                rsa_public_key: rsaPublicKey,
-              },
-            },
-          ],
+      await transact({
+        account: CONTRACT_ACCOUNT,
+        name: 'setkey',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          account: account.name,
+          rsa_public_key: rsaPublicKey,
         },
-        {
-          blocksBehind: 3,
-          expireSeconds: 30,
-        },
-      );
-      message.success(`Transaction id: ${result.transaction_id}`, 4);
+      });
       message.success('Your RSA public key is setting successfully!');
     } catch (e) {
       if (e instanceof RpcError) {
@@ -127,9 +116,22 @@ const BasicLayout: React.FC = (props: any) => {
                 <Button type="link">Current Account: {account.name}</Button>
               </Dropdown>
             ) : (
-              <Button type="primary" onClick={login}>
-                Login with Scatter
-              </Button>
+              <Dropdown.Button
+                type="primary"
+                overlay={
+                  <Menu>
+                    <Menu.Item onClick={() => login('scatter')}>
+                      Scatter
+                    </Menu.Item>
+                    <Menu.Item onClick={() => login('anchor')}>
+                      Anchor
+                    </Menu.Item>
+                  </Menu>
+                }
+                onClick={() => login('scatter')}
+              >
+                Login with
+              </Dropdown.Button>
             )}
           </Col>
         </Row>

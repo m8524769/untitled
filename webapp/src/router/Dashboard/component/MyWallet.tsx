@@ -19,7 +19,7 @@ const MyWallet: React.FC = () => {
   const [tonkenTransferVisible, setTokenTransferVisible] = useState(false);
   const [transferLoading, setTransferLoading] = useState(false);
 
-  const { eos, rpc, account } = useContext(AuthContext);
+  const { rpc, account, transact } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -78,39 +78,29 @@ const MyWallet: React.FC = () => {
   };
 
   const transfer = async (transferInfo: TransferInfo) => {
-    console.log(transferInfo);
     setTransferLoading(true);
     try {
-      const result = await eos.transact(
-        {
-          actions: [
-            {
-              account: 'eosio.token',
-              name: 'transfer',
-              authorization: [
-                {
-                  actor: account.name,
-                  permission: account.authority,
-                },
-              ],
-              data: {
-                from: account.name,
-                ...transferInfo,
-              },
-            },
-          ],
+      await transact({
+        account: 'eosio.token',
+        name: 'transfer',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          from: account.name,
+          ...transferInfo,
         },
-        {
-          blocksBehind: 3,
-          expireSeconds: 30,
-        },
-      );
+      });
       setTokenTransferVisible(false);
-      message.success(`Transaction id: ${result.transaction_id}`, 4);
       message.success('Transfer Successfully!');
     } catch (e) {
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
+      } else {
+        message.error(e);
       }
     }
     setTransferLoading(false);

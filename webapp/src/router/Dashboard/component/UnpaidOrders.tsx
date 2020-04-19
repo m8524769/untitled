@@ -15,7 +15,7 @@ const UnpaidOrders: React.FC<UnpaidOrdersProps> = (
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { eos, rpc, account } = useContext(AuthContext);
+  const { rpc, account, transact } = useContext(AuthContext);
 
   useEffect(() => {
     if (account.name) {
@@ -58,30 +58,19 @@ const UnpaidOrders: React.FC<UnpaidOrdersProps> = (
 
   const cancelOrder = async (fileId: number) => {
     try {
-      const result = await eos.transact(
-        {
-          actions: [
-            {
-              account: CONTRACT_ACCOUNT,
-              name: 'cancelorder',
-              authorization: [
-                {
-                  actor: account.name,
-                  permission: account.authority,
-                },
-              ],
-              data: {
-                file_id: fileId,
-              },
-            },
-          ],
+      await transact({
+        account: CONTRACT_ACCOUNT,
+        name: 'cancelorder',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          file_id: fileId,
         },
-        {
-          blocksBehind: 3,
-          expireSeconds: 30,
-        },
-      );
-      message.success(`Transaction id: ${result.transaction_id}`, 4);
+      });
       message.success('Order Canceled');
     } catch (e) {
       if (e instanceof RpcError) {
@@ -104,7 +93,7 @@ const UnpaidOrders: React.FC<UnpaidOrdersProps> = (
                 key="cancel-order"
                 onClick={() => {
                   Modal.confirm({
-                    title: 'Are you sure cancel this order?',
+                    title: 'Are you sure to cancel this order?',
                     icon: <ExclamationCircleOutlined />,
                     cancelText: 'Not sure',
                     okText: 'Confirm',

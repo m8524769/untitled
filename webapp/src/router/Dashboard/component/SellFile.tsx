@@ -26,7 +26,7 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
 
   const [form] = Form.useForm();
 
-  const { eos, rpc, account } = useContext(AuthContext);
+  const { rpc, account, transact } = useContext(AuthContext);
 
   useEffect(() => {
     getContractRsaPublicKey();
@@ -59,32 +59,21 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
   const sellFile = async (salesInfo: SalesInfo) => {
     setSellLoading(true);
     try {
-      const result = await eos.transact(
-        {
-          actions: [
-            {
-              account: CONTRACT_ACCOUNT,
-              name: 'sellfile',
-              authorization: [
-                {
-                  actor: account.name,
-                  permission: account.authority,
-                },
-              ],
-              data: {
-                file_id: salesInfo.fileId,
-                encrypted_cid: salesInfo.encryptedCid,
-                price: salesInfo.price,
-              },
-            },
-          ],
+      await transact({
+        account: CONTRACT_ACCOUNT,
+        name: 'sellfile',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          file_id: salesInfo.fileId,
+          encrypted_cid: salesInfo.encryptedCid,
+          price: salesInfo.price,
         },
-        {
-          blocksBehind: 3,
-          expireSeconds: 30,
-        },
-      );
-      message.success(`Transaction id: ${result.transaction_id}`, 4);
+      });
       message.success('Sell Successfully!');
     } catch (e) {
       if (e instanceof RpcError) {

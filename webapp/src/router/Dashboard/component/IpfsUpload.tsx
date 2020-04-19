@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography, PageHeader, Upload } from 'antd';
 import { InboxOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import IPFS from 'ipfs';
+import { IpfsContext } from 'context/IpfsContext';
 
 const IpfsUpload: React.FC = () => {
   const [cid, setCid] = useState('');
   const [fileList, setFileList] = useState([]);
 
+  const { ipfs, isIpfsReady } = useContext(IpfsContext);
+
   const upload = async (file: any) => {
-    const node = await IPFS.create({
-      repo: String(Math.random() + Date.now()),
-    });
-    for await (const { cid } of node.add(file)) {
+    for await (const { cid } of ipfs.add(file)) {
       return cid.toString();
     }
   };
@@ -47,6 +46,7 @@ const IpfsUpload: React.FC = () => {
         showUploadList={{
           showDownloadIcon: true,
         }}
+        disabled={!isIpfsReady}
       >
         {cid === '' ? (
           <div>

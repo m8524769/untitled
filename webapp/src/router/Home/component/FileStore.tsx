@@ -27,7 +27,7 @@ const FileStore: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [placeOrderLoading, setPlaceOrderLoading] = useState(false);
 
-  const { eos, rpc, account } = useContext(AuthContext);
+  const { rpc, account, transact } = useContext(AuthContext);
 
   useEffect(() => {
     getFiles();
@@ -58,32 +58,21 @@ const FileStore: React.FC = () => {
   const placeOrder = async (fileId: number) => {
     setPlaceOrderLoading(true);
     try {
-      const result = await eos.transact(
-        {
-          actions: [
-            {
-              account: CONTRACT_ACCOUNT,
-              name: 'placeorder',
-              authorization: [
-                {
-                  actor: account.name,
-                  permission: account.authority,
-                },
-              ],
-              data: {
-                buyer: account.name,
-                file_id: fileId,
-              },
-            },
-          ],
+      await transact({
+        account: CONTRACT_ACCOUNT,
+        name: 'placeorder',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          buyer: account.name,
+          file_id: fileId,
         },
-        {
-          blocksBehind: 3,
-          expireSeconds: 30,
-        },
-      );
-      message.success(`Transaction id: ${result.transaction_id}`, 4);
-      message.success('Place Order Successfully!');
+      });
+      message.success('Successfully Ordered!');
     } catch (e) {
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
