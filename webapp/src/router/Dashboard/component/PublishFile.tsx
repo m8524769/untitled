@@ -83,9 +83,8 @@ const PublishFile: React.FC = () => {
     } catch (e) {
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
-      } else {
-        message.error(e);
       }
+      console.error(e);
     }
     setPublishLoading(false);
   };

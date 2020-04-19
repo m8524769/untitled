@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Layout,
   Menu,
@@ -9,9 +9,10 @@ import {
   message,
   notification,
   Typography,
+  Radio,
 } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
-import { AuthContext } from 'context/AuthContext';
+import { AuthContext, WalletType } from 'context/AuthContext';
 import { ExportOutlined, KeyOutlined } from '@ant-design/icons';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import { RpcError } from 'eosjs';
@@ -28,7 +29,15 @@ const navLinks = [
   },
 ];
 
+const supportedWallets = ['scatter', 'anchor'];
+const walletLabel = {
+  scatter: 'Scatter',
+  anchor: 'Anchor',
+};
+
 const BasicLayout: React.FC = (props: any) => {
+  const [defaultWallet, setDefaultWallet] = useState<WalletType>('scatter');
+
   const { account, login, signout, transact } = useContext(AuthContext);
 
   const onSetKeyClick = () => {
@@ -66,9 +75,8 @@ const BasicLayout: React.FC = (props: any) => {
     } catch (e) {
       if (e instanceof RpcError) {
         message.error(JSON.stringify(e.json, null, 2));
-      } else {
-        message.error(e);
       }
+      console.error(e);
     }
   };
 
@@ -116,22 +124,31 @@ const BasicLayout: React.FC = (props: any) => {
                 <Button type="link">Current Account: {account.name}</Button>
               </Dropdown>
             ) : (
-              <Dropdown.Button
-                type="primary"
+              <Dropdown
                 overlay={
-                  <Menu>
-                    <Menu.Item onClick={() => login('scatter')}>
-                      Scatter
-                    </Menu.Item>
-                    <Menu.Item onClick={() => login('anchor')}>
-                      Anchor
-                    </Menu.Item>
+                  <Menu selectable={false}>
+                    <Menu.ItemGroup title="Choose your wallet:">
+                      <Menu.Item>
+                        <Radio.Group
+                          name="choose-wallet"
+                          onChange={(e) => setDefaultWallet(e.target.value)}
+                          value={defaultWallet}
+                        >
+                          {supportedWallets.map((wallet) => (
+                            <Radio value={wallet} key={wallet}>
+                              {walletLabel[wallet]}
+                            </Radio>
+                          ))}
+                        </Radio.Group>
+                      </Menu.Item>
+                    </Menu.ItemGroup>
                   </Menu>
                 }
-                onClick={() => login('scatter')}
               >
-                Login with
-              </Dropdown.Button>
+                <Button type="primary" onClick={() => login(defaultWallet)}>
+                  Login with {walletLabel[defaultWallet]}
+                </Button>
+              </Dropdown>
             )}
           </Col>
         </Row>

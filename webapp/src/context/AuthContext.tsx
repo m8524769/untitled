@@ -7,7 +7,7 @@ import AnchorLinkBrowserTransport from 'anchor-link-browser-transport';
 import { message } from 'antd';
 import { CONTRACT_ACCOUNT, NETWORK } from 'constants/eos';
 
-declare type WalletType = 'scatter' | 'anchor';
+export declare type WalletType = 'scatter' | 'anchor';
 
 interface Account {
   name?: string;
@@ -124,7 +124,7 @@ export const AuthProvider = ({ children }) => {
         );
 
       case 'anchor':
-        return await link.transact({ action, broadcast: true });
+        return await link.transact({ action });
     }
   };
 
