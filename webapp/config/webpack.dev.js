@@ -11,6 +11,7 @@ module.exports = merge(webpackCommonConfig, {
     hot: true,
     historyApiFallback: true,
     disableHostCheck: true,
+    clientLogLevel: 'silent',
     host: process.env.HOST || '0.0.0.0',
     port: parseInt(process.env.PORT, 10) || 4200,
   },

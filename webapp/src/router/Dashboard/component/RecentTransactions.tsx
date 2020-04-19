@@ -58,7 +58,7 @@ const RecentTransactions: React.FC = () => {
     setLoading(true);
     try {
       const result = await rpc.history_get_actions(account);
-      console.log(result);
+      console.log('Recent Transactions:', result);
       setLastIrreversibleBlock(result.last_irreversible_block);
       setTransactions(
         result.actions

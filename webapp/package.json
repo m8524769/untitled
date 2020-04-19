@@ -12,7 +12,7 @@
     "build:stats": "webpack --profile --json --progress > dist/stats.json",
     "analyze": "yarn build:stats && webpack-bundle-analyzer dist/stats.json",
     "lint": "eslint --ext .tsx,.ts src/",
-    "format": "prettier -c --write 'src/**/*.{tsx,ts}'",
+    "format": "prettier -c --write \"src/**/*.{tsx,ts}\"",
     "debug:webpack": "node --inspect-brk node_modules/webpack/bin/webpack.js"
   },
   "dependencies": {
@@ -23,7 +23,6 @@
     "anchor-link": "^1.0.3",
     "anchor-link-browser-transport": "^1.0.2",
     "antd": "^4.1.4",
-    "dot-prop": "^5.2.0",
     "eosjs": "^20.0.3",
     "eosjs-ecc": "^4.0.7",
     "ipfs": "^0.43.0",
