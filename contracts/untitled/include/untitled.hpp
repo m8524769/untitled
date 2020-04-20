@@ -40,6 +40,8 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void on_transfer(name from, name to, asset quantity, string memo);
 
   private:
+    const symbol default_symbol = symbol(symbol_code("ASS"), 4);
+    static const uint16_t exchange_rate = 10;  // 1 EOS = 1 ASS * exchange_rate
     static const uint32_t order_security_period = 900;  // 15 miniutes
 
     struct [[eosio::table]] file {

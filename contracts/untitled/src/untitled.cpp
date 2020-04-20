@@ -157,10 +157,31 @@ void untitled::setkey(name account, string rsa_public_key) {
 
 [[eosio::on_notify("eosio.token::transfer")]]
 void untitled::on_transfer(name from, name to, asset quantity, string memo) {
-  if (memo == "income")
+  if (memo == "exchange" || memo == "income")
     return;
 
-  check(memo != "", "You should fill in the file ID in memo");
+  // Token Exchange (if memo is empty)
+  if (memo == "") {
+    asset equivalent;
+
+    auto sym = quantity.symbol;
+    if (sym.code() == symbol_code("EOS")) {
+      equivalent = asset(quantity.amount * exchange_rate, default_symbol);
+    } else if (sym.code() == default_symbol.code()) {
+      equivalent = asset(quantity.amount / exchange_rate, symbol(symbol_code("EOS"), 4));
+    }
+    check(equivalent.is_valid(), "Illegal exchange");
+
+    // Send back the equivalent tokens
+    action(
+      permission_level{get_self(), "active"_n},
+      "eosio.token"_n,
+      "transfer"_n,
+      make_tuple(get_self(), from, equivalent, string("exchange"))
+    ).send();
+
+    return;
+  }
 
   files_table files(get_self(), get_self().value);
 
