@@ -58,7 +58,7 @@ const updateEncryptedCid = async (fileId: number, encryptedCid: string) => {
 
 const run: StatelessActionCallback = async (payload: any, block: Block, context: any) => {
   console.log(payload, block);
-  if (payload.data.to !== eosConfig.contract) {
+  if (payload.data.to !== eosConfig.contract || payload.data.memo === '') {
     return;
   }
 

@@ -41,7 +41,8 @@ const PublishFile: React.FC = () => {
 
   const cidValidator = async (rule, value) => {
     try {
-      for await (const file of ipfs.ls(value)) {
+      for await (const file of ipfs.files.ls(`/ipfs/${value}`)) {
+        console.log(file);
         setFileSize(file.size);
       }
     } catch (e) {

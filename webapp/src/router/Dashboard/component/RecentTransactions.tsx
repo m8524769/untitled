@@ -170,16 +170,6 @@ const RecentTransactions: React.FC = () => {
                         {record.block_time.replace('T', ' ')}
                       </Descriptions.Item>
 
-                      <Descriptions.Item label="Authorization">
-                        {record.action_trace.act.authorization.map(
-                          (authorization) => (
-                            <Tag color="green" key={authorization.actor}>
-                              {`${authorization.actor}@${authorization.permission}`}
-                            </Tag>
-                          ),
-                        )}
-                      </Descriptions.Item>
-
                       <Descriptions.Item label="Action">
                         <Tag
                           color={
@@ -191,6 +181,16 @@ const RecentTransactions: React.FC = () => {
                           {record.action_trace.act.account}::
                           {record.action_trace.act.name}
                         </Tag>
+                      </Descriptions.Item>
+
+                      <Descriptions.Item label="Authorization">
+                        {record.action_trace.act.authorization.map(
+                          (authorization) => (
+                            <Tag color="green" key={authorization.actor}>
+                              {`${authorization.actor}@${authorization.permission}`}
+                            </Tag>
+                          ),
+                        )}
                       </Descriptions.Item>
 
                       <Descriptions.Item label="Data">

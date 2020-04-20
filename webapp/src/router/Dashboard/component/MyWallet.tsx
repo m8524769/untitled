@@ -1,12 +1,41 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, PageHeader, Space, message, Statistic } from 'antd';
-import { SyncOutlined } from '@ant-design/icons';
-import Title from 'antd/lib/typography/Title';
+import {
+  Button,
+  PageHeader,
+  Space,
+  message,
+  Statistic,
+  Popover,
+  Typography,
+} from 'antd';
+import {
+  SyncOutlined,
+  QuestionCircleOutlined,
+  MoneyCollectOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
 import useInterval from '@use-it/interval';
-import { TOKEN_SYMBOL } from 'constants/eos';
+import { TOKEN_SYMBOL, CONTRACT_ACCOUNT } from 'constants/eos';
 import TokenTransfer, { TransferInfo } from './TokenTransfer';
 import { RpcError } from 'eosjs';
 import { AuthContext } from 'context/AuthContext';
+
+const { Title, Paragraph, Text } = Typography;
+
+const help = [
+  {
+    question: 'How to buy files from others?',
+    answer: `After placing an order, you need to transfer the tokens to ${CONTRACT_ACCOUNT} at the price in the order, and fill in the file ID correctly in memo, then you will see the file you purchased below. (It is best to complete the payment within 15 minutes, otherwise the order may be replaced by others in the future)`,
+  },
+  {
+    question: 'How to exchange tokens?',
+    answer: `Click "Transfer" and send tokens to ${CONTRACT_ACCOUNT} directly, then you will receive equivalent tokens in a while, remember not to fill in the memo, otherwise the exchange will fail.`,
+  },
+  {
+    question: 'Which tokens can be exchanged?',
+    answer: `Only EOS and ${TOKEN_SYMBOL}.`,
+  },
+];
 
 const MyWallet: React.FC = () => {
   const [balance, setBalance] = useState('--');
@@ -130,10 +159,27 @@ const MyWallet: React.FC = () => {
       />
 
       <Space style={{ marginTop: '24px' }}>
-        <Button disabled={loading}>Withdraw</Button>
-        <Button disabled={loading}>Recharge</Button>
+        <Popover
+          title="Q & A"
+          placement="bottomLeft"
+          trigger="click"
+          content={help.map((each) => (
+            <div key={each.question} style={{ maxWidth: '270px' }}>
+              <Text strong>{each.question}</Text>
+              <Paragraph>{each.answer}</Paragraph>
+            </div>
+          ))}
+        >
+          <Button icon={<QuestionCircleOutlined />}>Help</Button>
+        </Popover>
+
+        <Button icon={<MoneyCollectOutlined />} disabled={loading}>
+          Receive
+        </Button>
+
         <Button
           type="primary"
+          icon={<SendOutlined />}
           onClick={() => setTokenTransferVisible(true)}
           disabled={loading}
         >
