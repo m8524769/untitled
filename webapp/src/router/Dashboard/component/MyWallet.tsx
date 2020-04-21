@@ -8,10 +8,10 @@ import {
   Popover,
   Typography,
   Modal,
+  Divider,
 } from 'antd';
 import {
   SyncOutlined,
-  QuestionCircleOutlined,
   MoneyCollectOutlined,
   SendOutlined,
 } from '@ant-design/icons';
@@ -175,13 +175,13 @@ const MyWallet: React.FC = () => {
           placement="bottomLeft"
           trigger="click"
           content={help.map((each) => (
-            <div key={each.question} style={{ maxWidth: '313px' }}>
+            <div key={each.question} style={{ maxWidth: '292px' }}>
               <Text strong>{each.question}</Text>
               <Paragraph>{each.answer}</Paragraph>
             </div>
           ))}
         >
-          <Button icon={<QuestionCircleOutlined />}>Need Help?</Button>
+          <Button>Need Help?</Button>
         </Popover>
 
         <Button
@@ -190,21 +190,24 @@ const MyWallet: React.FC = () => {
             Modal.confirm({
               title: 'Scan to Pay me',
               content: (
-                <QRCode
-                  value={account.name}
-                  size={200}
-                  level="H"
-                  includeMargin={true}
-                  imageSettings={{
-                    src: EosLogo,
-                    height: 68,
-                    width: 68,
-                  }}
-                />
+                <div>
+                  <QRCode
+                    value={account.name}
+                    size={200}
+                    level="H"
+                    includeMargin={true}
+                    imageSettings={{
+                      src: EosLogo,
+                      height: 68,
+                      width: 68,
+                    }}
+                  />
+                  <Divider>{account.name}</Divider>
+                </div>
               ),
               maskClosable: true,
-              okText: 'Save image',
-              cancelText: 'Close',
+              okButtonProps: { style: { display: 'none' } },
+              cancelButtonProps: { style: { display: 'none' } },
               style: { textAlign: 'center' },
             });
           }}
