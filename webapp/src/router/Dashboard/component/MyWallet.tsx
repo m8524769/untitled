@@ -7,6 +7,7 @@ import {
   Statistic,
   Popover,
   Typography,
+  Modal,
 } from 'antd';
 import {
   SyncOutlined,
@@ -18,7 +19,9 @@ import useInterval from '@use-it/interval';
 import { TOKEN_SYMBOL, CONTRACT_ACCOUNT } from 'constants/eos';
 import TokenTransfer, { TransferInfo } from './TokenTransfer';
 import { RpcError } from 'eosjs';
+import QRCode from 'qrcode.react';
 import { AuthContext } from 'context/AuthContext';
+import EosLogo from 'assets/eos-logo.svg';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -181,7 +184,32 @@ const MyWallet: React.FC = () => {
           <Button icon={<QuestionCircleOutlined />}>Need Help?</Button>
         </Popover>
 
-        <Button icon={<MoneyCollectOutlined />} disabled={loading}>
+        <Button
+          icon={<MoneyCollectOutlined />}
+          onClick={() => {
+            Modal.confirm({
+              title: 'Scan to Pay me',
+              content: (
+                <QRCode
+                  value={account.name}
+                  size={200}
+                  level="H"
+                  includeMargin={true}
+                  imageSettings={{
+                    src: EosLogo,
+                    height: 68,
+                    width: 68,
+                  }}
+                />
+              ),
+              maskClosable: true,
+              okText: 'Save image',
+              cancelText: 'Close',
+              style: { textAlign: 'center' },
+            });
+          }}
+          disabled={loading}
+        >
           Receive
         </Button>
 

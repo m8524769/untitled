@@ -28,6 +28,7 @@
     "ipfs": "^0.43.0",
     "jshashes": "^1.0.8",
     "node-rsa": "^1.0.8",
+    "qrcode.react": "^1.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.1.0"

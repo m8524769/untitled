@@ -1,6 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Form, Input, Button, Modal, message, PageHeader, Space } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+  ExclamationCircleOutlined,
+  ReloadOutlined,
+  TagsOutlined,
+} from '@ant-design/icons';
 import { CONTRACT_ACCOUNT, TOKEN_SYMBOL } from 'constants/eos';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
@@ -149,6 +153,7 @@ const PublishFile: React.FC = () => {
           <Space>
             <Button
               type="primary"
+              icon={<TagsOutlined />}
               htmlType="submit"
               loading={publishLoading}
               disabled={!account.name}
@@ -156,7 +161,11 @@ const PublishFile: React.FC = () => {
               Publish & Sell
             </Button>
 
-            <Button htmlType="button" onClick={onReset}>
+            <Button
+              icon={<ReloadOutlined />}
+              htmlType="button"
+              onClick={onReset}
+            >
               Reset
             </Button>
           </Space>
