@@ -24,16 +24,24 @@ const { Title, Paragraph, Text } = Typography;
 
 const help = [
   {
+    question: 'What should I do before buying files?',
+    answer: `Please make sure you have successfully set the RSA keypair and hold the private key. You can reset it if you lose your key.`,
+  },
+  {
     question: 'How to buy files from others?',
-    answer: `After placing an order, you need to transfer the tokens to ${CONTRACT_ACCOUNT} at the price in the order, and fill in the file ID correctly in memo, then you will see the file you purchased below. (It is best to complete the payment within 15 minutes, otherwise the order may be replaced by others in the future)`,
+    answer: `After placing orders, you need to transfer tokens to "${CONTRACT_ACCOUNT}" manually with a correct file ID in memo. (You should complete the payment within 15 minutes, otherwise the order may be replaced by others at any time)`,
   },
   {
     question: 'How to exchange tokens?',
-    answer: `Click "Transfer" and send tokens to ${CONTRACT_ACCOUNT} directly, then you will receive equivalent tokens in a while, remember not to fill in the memo, otherwise the exchange will fail.`,
+    answer: `Just click "Transfer" and send tokens to "${CONTRACT_ACCOUNT}", then you will receive the equivalent tokens in a while. (Do NOT fill in anything in memo, otherwise the exchange will fail)`,
   },
   {
     question: 'Which tokens can be exchanged?',
     answer: `Only EOS and ${TOKEN_SYMBOL}.`,
+  },
+  {
+    question: 'Will I get a token refund if I overpaid?',
+    answer: `Sorry but no.`,
   },
 ];
 
@@ -164,13 +172,13 @@ const MyWallet: React.FC = () => {
           placement="bottomLeft"
           trigger="click"
           content={help.map((each) => (
-            <div key={each.question} style={{ maxWidth: '270px' }}>
+            <div key={each.question} style={{ maxWidth: '313px' }}>
               <Text strong>{each.question}</Text>
               <Paragraph>{each.answer}</Paragraph>
             </div>
           ))}
         >
-          <Button icon={<QuestionCircleOutlined />}>Help</Button>
+          <Button icon={<QuestionCircleOutlined />}>Need Help?</Button>
         </Popover>
 
         <Button icon={<MoneyCollectOutlined />} disabled={loading}>

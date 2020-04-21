@@ -62,6 +62,8 @@ const MyFiles: React.FC = () => {
   };
 
   const formatBytes = (bytes, decimals) => {
+    if (bytes === 0) return 'Unknown';
+
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
