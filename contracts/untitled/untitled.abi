@@ -102,6 +102,24 @@
             ]
         },
         {
+            "name": "modifyfile",
+            "base": "",
+            "fields": [
+                {
+                    "name": "file_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "order",
             "base": "",
             "fields": [
@@ -218,6 +236,11 @@
         {
             "name": "discontinue",
             "type": "discontinue",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "modifyfile",
+            "type": "modifyfile",
             "ricardian_contract": ""
         },
         {

@@ -42,6 +42,23 @@ void untitled::sellfile(uint64_t file_id, string encrypted_cid, asset price) {
 }
 
 [[eosio::action]]
+void untitled::modifyfile(uint64_t file_id, string description, asset price) {
+  check(price.is_valid(), "Invalid price");
+
+  files_table files(get_self(), get_self().value);
+
+  auto file_itr = files.find(file_id);
+  check(file_itr != files.end(), "File does not exist");
+
+  require_auth( file_itr->owner );
+
+  files.modify(file_itr, file_itr->owner, [&](auto &file) {
+    file.description = description;
+    file.price = price;
+  });
+}
+
+[[eosio::action]]
 void untitled::placeorder(name buyer, uint64_t file_id) {
   require_auth( buyer );
 

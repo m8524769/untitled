@@ -16,6 +16,9 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void sellfile(uint64_t file_id, string encrypted_cid, asset price);
 
     [[eosio::action]]
+    void modifyfile(uint64_t file_id, string description, asset price);
+
+    [[eosio::action]]
     void placeorder(name buyer, uint64_t file_id);
 
     [[eosio::action]]
