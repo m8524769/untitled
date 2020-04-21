@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { RpcError } from 'eosjs';
 import {
   Skeleton,
   List,
@@ -7,23 +8,29 @@ import {
   Button,
   Space,
   Pagination,
+  Tooltip,
 } from 'antd';
+import { SyncOutlined, TagsOutlined } from '@ant-design/icons';
 import { AuthContext } from 'context/AuthContext';
-import { RpcError } from 'eosjs';
 import { CONTRACT_ACCOUNT } from 'constants/eos';
 import DownloadFile from './DownloadFile';
 import SellFile from './SellFile';
-import { SyncOutlined } from '@ant-design/icons';
+import ModifyFile from './ModifyFile';
 
 const MyFiles: React.FC = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // File Actions Modal
+  // Action Modals
   const [downloadFileVisible, setDownloadFileVisible] = useState(false);
   const [sellFileVisible, setSellFileVisible] = useState(false);
-  const [encryptedCid, setEncryptedCid] = useState('');
+  const [modifyFileVisible, setModifyFileVisible] = useState(false);
+
+  // Props For Modals
   const [fileId, setFileId] = useState();
+  const [encryptedCid, setEncryptedCid] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
 
   const { rpc, account } = useContext(AuthContext);
 
@@ -82,8 +89,26 @@ const MyFiles: React.FC = () => {
             actions={
               file.for_sale === 1
                 ? [
-                    <Badge status="processing" text="On Sale" key="on-sale" />,
-                    <a key="modify" onClick={() => {}}>
+                    <Tooltip
+                      title={
+                        <div>
+                          <TagsOutlined style={{ marginRight: '4px' }} />
+                          {file.price}
+                        </div>
+                      }
+                      key="on-sale"
+                    >
+                      <Badge status="processing" text="On Sale" />
+                    </Tooltip>,
+                    <a
+                      key="modify-file"
+                      onClick={() => {
+                        setModifyFileVisible(true);
+                        setFileId(file.id);
+                        setDescription(file.description);
+                        setPrice(file.price);
+                      }}
+                    >
                       Modify
                     </a>,
                   ]
@@ -94,6 +119,7 @@ const MyFiles: React.FC = () => {
                         setSellFileVisible(true);
                         setFileId(file.id);
                         setEncryptedCid(file.encrypted_cid);
+                        setDescription(file.description);
                       }}
                     >
                       Sell
@@ -103,6 +129,7 @@ const MyFiles: React.FC = () => {
                       onClick={() => {
                         setDownloadFileVisible(true);
                         setEncryptedCid(file.encrypted_cid);
+                        setDescription(file.description);
                       }}
                     >
                       Download
@@ -134,6 +161,7 @@ const MyFiles: React.FC = () => {
       <DownloadFile
         visible={downloadFileVisible}
         encryptedCid={encryptedCid}
+        description={description}
         onClose={() => {
           setDownloadFileVisible(false);
         }}
@@ -142,8 +170,18 @@ const MyFiles: React.FC = () => {
         visible={sellFileVisible}
         fileId={fileId}
         encryptedCid={encryptedCid}
+        description={description}
         onClose={() => {
           setSellFileVisible(false);
+        }}
+      />
+      <ModifyFile
+        visible={modifyFileVisible}
+        fileId={fileId}
+        description={description}
+        price={price}
+        onClose={() => {
+          setModifyFileVisible(false);
         }}
       />
     </Skeleton>

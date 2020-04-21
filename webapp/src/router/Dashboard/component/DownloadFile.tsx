@@ -5,6 +5,7 @@ import NodeRSA from 'node-rsa';
 interface DownloadFileProps {
   visible: boolean;
   encryptedCid: string;
+  description: string;
   onClose: () => void;
 }
 
@@ -27,7 +28,7 @@ const DownloadFile: React.FC<DownloadFileProps> = (
   return (
     <Modal
       visible={props.visible}
-      title="Download File"
+      title={`Download ${props.description}`}
       width={540}
       okText="Download"
       okButtonProps={{

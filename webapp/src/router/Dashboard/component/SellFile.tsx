@@ -16,6 +16,7 @@ interface SellFileProps {
   visible: boolean;
   fileId: number;
   encryptedCid: string;
+  description: string;
   onClose: () => void;
 }
 
@@ -105,7 +106,7 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
   return (
     <Modal
       visible={props.visible}
-      title="Sell File"
+      title={`Sell ${props.description}`}
       width={540}
       okText="Sell"
       okButtonProps={{
