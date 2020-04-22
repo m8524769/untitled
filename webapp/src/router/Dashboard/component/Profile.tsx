@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import MyFiles from './MyFiles';
+import WishList from './WishList';
 import UnpaidOrders from './UnpaidOrders';
 
 const Profile: React.FC = () => {
@@ -16,7 +17,9 @@ const Profile: React.FC = () => {
         <MyFiles></MyFiles>
       </Tabs.TabPane>
 
-      <Tabs.TabPane tab="Wish List" key="wish-list"></Tabs.TabPane>
+      <Tabs.TabPane tab="Wish List" key="wish-list">
+        <WishList></WishList>
+      </Tabs.TabPane>
 
       <Tabs.TabPane
         tab={`Unpaid Orders (${unpaidOrdersTotal})`}
