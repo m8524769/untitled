@@ -100,6 +100,43 @@ void untitled::cancelorder(uint64_t file_id) {
 }
 
 [[eosio::action]]
+void untitled::addwish(name account, uint64_t file_id) {
+  require_auth( account );
+
+  files_table files(get_self(), get_self().value);
+
+  auto file_itr = files.find(file_id);
+  check(file_itr != files.end(), "File does not exist");
+  check(account != file_itr->owner, "You have already owned this file");
+
+  wishlist_table wishlist(get_self(), account.value);
+
+  auto wish_itr = wishlist.find(file_id);
+  if (wish_itr == wishlist.end()) {
+    wishlist.emplace(account, [&](auto &wish) {
+      wish.file_id = file_id;
+      wish.description = file_itr->description;
+    });
+  } else {
+    wishlist.modify(wish_itr, account, [&](auto &wish) {
+      wish.description = file_itr->description;
+    });
+  }
+}
+
+[[eosio::action]]
+void untitled::removewish(name account, uint64_t file_id) {
+  require_auth( account );
+
+  wishlist_table wishlist(get_self(), account.value);
+
+  auto wish_itr = wishlist.find(file_id);
+  check(wish_itr != wishlist.end(), "Wish does not exist");
+
+  wish_itr = wishlist.erase(wish_itr);
+}
+
+[[eosio::action]]
 void untitled::updatecid(uint64_t file_id, string encrypted_cid) {
   require_auth( get_self() );
 
@@ -159,7 +196,7 @@ void untitled::setkey(name account, string rsa_public_key) {
 
   check(rsa_public_key != "", "RSA public key is required");
 
-  rsa_key_table keys(get_self(), account.value);
+  rsa_keys_table keys(get_self(), account.value);
 
   if (keys.begin() == keys.end()) {
     keys.emplace(account, [&](auto &key) {

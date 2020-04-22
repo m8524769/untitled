@@ -33,6 +33,8 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
     getContractRsaPublicKey();
   }, []);
 
+  useEffect(() => form.setFieldsValue({ price: '' }), [props.visible]);
+
   const getContractRsaPublicKey = async () => {
     const result = await rpc.get_table_rows({
       json: true,

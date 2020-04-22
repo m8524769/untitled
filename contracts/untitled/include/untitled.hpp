@@ -25,6 +25,12 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     void cancelorder(uint64_t file_id);
 
     [[eosio::action]]
+    void addwish(name account, uint64_t file_id);
+
+    [[eosio::action]]
+    void removewish(name account, uint64_t file_id);
+
+    [[eosio::action]]
     void updatecid(uint64_t file_id, string encrypted_cid);
 
     [[eosio::action]]
@@ -71,6 +77,13 @@ class [[eosio::contract("untitled")]] untitled : public contract {
     };
 
     // Index by Scope (account name)
+    struct [[eosio::table]] wish {
+      uint64_t     file_id;
+      string       description;
+      uint64_t primary_key() const { return file_id; }
+    };
+
+    // Index by Scope (account name)
     struct [[eosio::table]] rsa_key {
       string       public_key;
       uint64_t primary_key() const { return 0; }
@@ -85,7 +98,9 @@ class [[eosio::contract("untitled")]] untitled : public contract {
       indexed_by<"bybuyer"_n, const_mem_fun<order, uint64_t, &order::get_buyer>>
     > orders_table;
 
-    typedef multi_index<"rsa.keys"_n, rsa_key> rsa_key_table;
+    typedef multi_index<"wishlist"_n, wish> wishlist_table;
+
+    typedef multi_index<"rsa.keys"_n, rsa_key> rsa_keys_table;
 
     uint32_t now() {
       return current_time_point().sec_since_epoch();

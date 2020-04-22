@@ -20,6 +20,7 @@ import {
   PlusOutlined,
   EllipsisOutlined,
   ExclamationCircleOutlined,
+  TagsOutlined,
 } from '@ant-design/icons';
 
 const FileStore: React.FC = () => {
@@ -108,7 +109,12 @@ const FileStore: React.FC = () => {
               <Tag>Owner: {file.owner}</Tag>
             )
           }
-          extra={<Title level={4}>{file.price}</Title>}
+          extra={
+            <Title level={4}>
+              <TagsOutlined style={{ marginRight: '4px' }} />
+              {file.price}
+            </Title>
+          }
           key={file.cid_hash}
           style={{
             marginTop: '16px',
