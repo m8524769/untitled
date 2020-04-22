@@ -131,7 +131,7 @@ void untitled::removewish(name account, uint64_t file_id) {
   wishlist_table wishlist(get_self(), account.value);
 
   auto wish_itr = wishlist.find(file_id);
-  check(wish_itr != wishlist.end(), "Wish does not exist");
+  check(wish_itr != wishlist.end(), "This file does not exist on your wishlist");
 
   wish_itr = wishlist.erase(wish_itr);
 }
