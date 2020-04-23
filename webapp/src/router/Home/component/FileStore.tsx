@@ -82,6 +82,31 @@ const FileStore: React.FC = () => {
     setPlaceOrderLoading(false);
   };
 
+  const addWish = async (fileId: number) => {
+    try {
+      await transact({
+        account: CONTRACT_ACCOUNT,
+        name: 'addwish',
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority,
+          },
+        ],
+        data: {
+          account: account.name,
+          file_id: fileId,
+        },
+      });
+      message.success('Added Successfully!');
+    } catch (e) {
+      if (e instanceof RpcError) {
+        message.error(JSON.stringify(e.json, null, 2));
+      }
+      console.error(e);
+    }
+  };
+
   return (
     <Skeleton active loading={loading}>
       <Search
@@ -149,9 +174,14 @@ const FileStore: React.FC = () => {
               Place Order
             </Button>
 
-            <Button type="link" icon={<PlusOutlined />}>
+            <Button
+              type="link"
+              icon={<PlusOutlined />}
+              onClick={() => addWish(file.id)}
+            >
               Add to Wish List
             </Button>
+
             <Button type="link" icon={<EllipsisOutlined />} />
           </Space>
         </PageHeader>
