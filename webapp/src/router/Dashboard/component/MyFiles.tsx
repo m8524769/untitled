@@ -173,7 +173,6 @@ const MyFiles: React.FC = () => {
         description={description}
         onClose={() => {
           setSellFileVisible(false);
-          setFileId(undefined);
         }}
       />
       <ModifyFile
@@ -183,7 +182,6 @@ const MyFiles: React.FC = () => {
         price={price}
         onClose={() => {
           setModifyFileVisible(false);
-          setFileId(undefined);
         }}
       />
     </Skeleton>
