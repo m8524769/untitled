@@ -5,6 +5,7 @@ import { CONTRACT_ACCOUNT } from 'constants/eos';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import usePrevious from 'hooks/usePrevious';
 
 interface SalesInfo {
   fileId: number;
@@ -33,7 +34,12 @@ const SellFile: React.FC<SellFileProps> = (props: SellFileProps) => {
     getContractRsaPublicKey();
   }, []);
 
-  useEffect(() => form.setFieldsValue({ price: '' }), [props.visible]);
+  const prevFileId = usePrevious(props.fileId);
+  useEffect(() => {
+    if (props.visible && prevFileId) {
+      form.setFieldsValue({ price: '' });
+    }
+  }, [props.fileId]);
 
   const getContractRsaPublicKey = async () => {
     const result = await rpc.get_table_rows({

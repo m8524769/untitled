@@ -4,6 +4,7 @@ import { CONTRACT_ACCOUNT } from 'constants/eos';
 import { AuthContext } from 'context/AuthContext';
 import { RpcError } from 'eosjs';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import usePrevious from 'hooks/usePrevious';
 
 interface ModifyInfo {
   fileId: number;
@@ -26,7 +27,12 @@ const ModifyFile: React.FC<ModifyFileProps> = (props: ModifyFileProps) => {
 
   const { account, transact } = useContext(AuthContext);
 
-  useEffect(() => form.resetFields(), [props.visible]);
+  const prevFileId = usePrevious(props.fileId);
+  useEffect(() => {
+    if (props.visible && prevFileId) {
+      form.resetFields();
+    }
+  }, [props.fileId]);
 
   const modifyFile = async (modifyInfo: ModifyInfo) => {
     setModifyLoading(true);

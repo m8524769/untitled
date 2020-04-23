@@ -26,4 +26,5 @@ const NETWORK_SET = {
   },
 };
 
+// Switch Network Here
 export const NETWORK = NETWORK_SET.LOCAL;
