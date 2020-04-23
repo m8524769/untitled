@@ -31,7 +31,13 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-router-dom": "^5.1.0"
+    "react-router-dom": "^5.1.0",
+    "ual-anchor": "^0.3.1",
+    "ual-ledger": "^0.2.0",
+    "ual-lynx": "^0.3.0",
+    "ual-reactjs-renderer": "^0.2.0",
+    "ual-scatter": "^0.2.0",
+    "ual-token-pocket": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
