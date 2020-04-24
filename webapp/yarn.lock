@@ -1573,10 +1573,22 @@
     isomorphic-ws "^4.0.1"
     ws "^6.1.0"
 
-"@scatterjs/core@^2.7.51", "@scatterjs/core@^2.7.52":
+"@scatterjs/core@^2.7.51":
   version "2.7.52"
   resolved "https://registry.npm.taobao.org/@scatterjs/core/download/@scatterjs/core-2.7.52.tgz#1751758ecb60a7284d0228022190b11ebdd04eec"
   integrity sha1-F1F1jstgpyhNAigCIZCxHr3QTuw=
+  dependencies:
+    create-hash "^1.2.0"
+    device-uuid "^1.0.4"
+    es6-promise "^4.2.4"
+    get-random-values "^1.2.0"
+    isomorphic-ws "^4.0.1"
+    ws "^6.1.0"
+
+"@scatterjs/core@^2.7.53":
+  version "2.7.53"
+  resolved "https://registry.npm.taobao.org/@scatterjs/core/download/@scatterjs/core-2.7.53.tgz#d1a4290be1c2d5989b8b6050167ce4ce67255a09"
+  integrity sha1-0aQpC+HC1Zibi2BQFnzkzmclWgk=
   dependencies:
     create-hash "^1.2.0"
     device-uuid "^1.0.4"
@@ -1592,12 +1604,12 @@
   dependencies:
     "@scatterjs/core" "^2.7.51"
 
-"@scatterjs/eosjs2@^1.5.34":
-  version "1.5.34"
-  resolved "https://registry.npm.taobao.org/@scatterjs/eosjs2/download/@scatterjs/eosjs2-1.5.34.tgz#7c40d004d254c0f9f64c2fff6eebe19ae115ff70"
-  integrity sha1-fEDQBNJUwPn2TC//buvhmuEV/3A=
+"@scatterjs/eosjs2@^1.5.35":
+  version "1.5.35"
+  resolved "https://registry.npm.taobao.org/@scatterjs/eosjs2/download/@scatterjs/eosjs2-1.5.35.tgz#fffdeba4dc3f35d98ec6b21ca9d9e5570808c0e6"
+  integrity sha1-//3rpNw/NdmOxrIcqdnlVwgIwOY=
   dependencies:
-    "@scatterjs/core" "^2.7.52"
+    "@scatterjs/core" "^2.7.53"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"

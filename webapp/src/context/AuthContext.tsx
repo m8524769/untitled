@@ -28,7 +28,7 @@ interface Action {
   };
 }
 
-interface AuthContextType {
+interface AuthContextValue {
   rpc: JsonRpc;
   account: Account;
   login: (wallet: WalletType) => void;
@@ -36,7 +36,7 @@ interface AuthContextType {
   transact: (action: Action) => Promise<string>;
 }
 
-export const AuthContext = React.createContext({} as AuthContextType);
+export const AuthContext = React.createContext({} as AuthContextValue);
 
 export const AuthProvider = ({ children }) => {
   const [account, setAccount] = useState<Account>({});
@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
         break;
 
       default:
-        message.error('Unsupported Wallet');
+        message.error(`The ${wallet} is not supported`);
     }
   };
 
@@ -108,6 +108,9 @@ export const AuthProvider = ({ children }) => {
         setWallet(undefined);
         message.success('You are signed out');
         break;
+
+      default:
+        message.error(`The ${wallet} is not supported`);
     }
   };
 
@@ -130,6 +133,9 @@ export const AuthProvider = ({ children }) => {
         return await link
           .transact({ action, broadcast: true })
           .then((result) => result.processed.id);
+
+      default:
+        message.error(`The ${wallet} is not supported`);
     }
   };
 
