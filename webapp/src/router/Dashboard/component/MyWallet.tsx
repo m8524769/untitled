@@ -103,7 +103,11 @@ const MyWallet: React.FC = () => {
       await rpc
         .get_currency_balance('eosio.token', account, symbol)
         .then((balance) => {
-          setBalance(balance[0]);
+          if (balance[0]) {
+            setBalance(balance[0]);
+          } else {
+            setBalance(`0.0000 ${symbol}`);
+          }
           setLoading(false);
           setUpdateTime(0);
           setUpdateTimeFormat('Updated just now');
