@@ -10,6 +10,11 @@ const webpackCommonConfig = require('./webpack.common');
 
 module.exports = merge(webpackCommonConfig, {
   mode: 'production',
+  output: {
+    filename: '[name].[hash:8].js',
+    chunkFilename: '[name].[hash:8].chunk.js',
+    publicPath: './'
+  },
   devtool: 'source-map',
   optimization: {
     minimizer: [
