@@ -1,5 +1,33 @@
 # UNTITLED (WIP)
 
+## 运行说明
+
+- 前端
+
+1. 本地节点的话将 `chainId` 填写至 `webapp/src/constants/eos.ts` 中的 `LOCAL` 项；
+2. 可在 `webapp/src/constants/eos.ts` 的最后一行切换测试网络；
+
+```bash
+cd ./webapp
+yarn
+yarn start
+```
+
+- 后端
+
+1. 将合约账户的EOS私钥填写至 `backend/config/eosConfig.json`；
+
+```bash
+cd ./backend
+npm i
+npm start
+```
+
+- 智能合约
+1. 部署后需为合约账户添加 `eosio.code` 权限；
+2. 部署 `eosio.token` 后发行代币 ASS，精度为4，并全数转移至合约账户；
+3. 使用 `setkey` 设置合约的 RSA 公钥。
+
 ## 交易流程
 
 ### 前提条件
