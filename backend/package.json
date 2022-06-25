@@ -11,7 +11,7 @@
     "demux": "^4.0.0",
     "demux-eos": "^4.0.1",
     "eosjs": "^20.0.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "node-rsa": "^1.0.8"
   },
   "devDependencies": {
